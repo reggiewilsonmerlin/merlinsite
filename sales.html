@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cars for Sale — Merlin Classic Cars</title>
+  <meta name="description" content="Classic cars for sale from Merlin Classic Cars — fully restored and prepared vehicles. Austin Healey, Jaguar and more. Stockport, Cheshire.">
+  <link rel="stylesheet" href="merlin.css">
+  <style>
+    .sales-page { padding: var(--section-py) 0; background: var(--cream); }
+
+    /* Sort/filter bar */
+    .sales-bar {
+      background: var(--parchment);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 1rem 0;
+    }
+    .sales-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .sales-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .sales-filter-btn {
+      font-family: var(--ff-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      background: transparent;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sales-filter-btn:hover,
+    .sales-filter-btn.active {
+      background: var(--navy);
+      color: var(--cream);
+      border-color: var(--navy);
+    }
+    .sales-count {
+      font-family: var(--ff-ui);
+      font-size: 0.8rem;
+      color: var(--mist);
+      letter-spacing: 0.05em;
+    }
+
+    /* Listings grid */
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Full listing card */
+    .listing-card {
+      background: var(--white);
+      box-shadow: var(--shadow-card);
+      transition: box-shadow 0.25s, transform 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .listing-card:hover {
+      box-shadow: var(--shadow-lift);
+      transform: translateY(-4px);
+    }
+    .listing-img {
+      height: 260px;
+      overflow: hidden;
+      background: var(--navy-mid);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .listing-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+    .listing-card:hover .listing-img img { transform: scale(1.05); }
+    .listing-img .ph {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--mist);
+    }
+    .listing-badge {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      font-family: var(--ff-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.85rem;
+    }
+    .badge-sale { background: var(--gold); color: var(--navy); }
+    .badge-sold { background: #555; color: var(--cream); }
+    .badge-new  { background: var(--navy); color: var(--gold); border: 1px solid var(--gold); }
+
+    .listing-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .listing-marque {
+      font-family: var(--ff-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.3rem;
+    }
+    .listing-title {
+      font-family: var(--ff-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+    .listing-year {
+      font-family: var(--ff-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: var(--mist);
+      margin-bottom: 1rem;
+    }
+    .listing-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .listing-spec {
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      color: #555;
+      background: var(--parchment);
+      padding: 0.3rem 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .listing-desc {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #4a4a4a;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .listing-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      margin-top: auto;
+    }
+    .listing-price {
+      font-family: var(--ff-display);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .listing-price.poa {
+      font-size: 1.25rem;
+      color: var(--mist);
+      font-weight: 600;
+    }
+
+    /* Add listing panel (admin-friendly) */
+    .admin-add-card {
+      background: var(--parchment);
+      border: 2px dashed rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+      padding: 2.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .admin-add-card:hover {
+      border-color: var(--gold-dim);
+      background: var(--cream);
+    }
+    .admin-add-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 1rem 0 0.5rem;
+    }
+    .admin-add-card p {
+      font-family: var(--ff-ui);
+      font-size: 0.85rem;
+      color: var(--mist);
+      max-width: 22ch;
+      line-height: 1.6;
+    }
+    .add-icon {
+      width: 64px; height: 64px;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0,0,0,0.25);
+      font-size: 2rem;
+      margin: 0 auto;
+      transition: all 0.2s;
+    }
+    .admin-add-card:hover .add-icon {
+      border-color: var(--gold-dim);
+      color: var(--gold-dim);
+    }
+
+    /* Info box */
+    .info-box {
+      background: var(--navy);
+      padding: var(--section-py) 0;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .info-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .info-text p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--mist);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .info-points {
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .info-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: var(--ff-ui);
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .info-point::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      min-width: 6px;
+      background: var(--gold);
+      margin-top: 0.45rem;
+    }
+
+    @media (max-width: 900px) {
+      .info-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .listings-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav scrolled" id="siteNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="sales.html" class="active">Cars for Sale</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:01663746499" class="nav-phone">01663 746499</a>
+      <button class="nav-burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="sales.html">Cars for Sale</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:01663746499" class="nav-phone-big">01663 746499</a>
+</div>
+
+<!-- Page Hero -->
+<div style="height:80px"></div>
+<section class="page-hero" style="height:340px;background:var(--navy)">
+  <img src="uploads/photos-1777807599577.jpeg" alt="" class="page-hero-bg">
+  <div class="page-hero-grad"></div>
+  <div class="container page-hero-content">
+    <p class="t-subhead">Merlin Classic Cars</p>
+    <h1>Cars for Sale</h1>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <div class="container breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span>Cars for Sale</span>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="sales-bar">
+  <div class="container sales-bar-inner">
+    <div class="sales-filters">
+      <button class="sales-filter-btn active" data-filter="all">All Vehicles</button>
+      <button class="sales-filter-btn" data-filter="austin-healey">Austin Healey</button>
+      <button class="sales-filter-btn" data-filter="jaguar">Jaguar</button>
+      <button class="sales-filter-btn" data-filter="race">Race Cars</button>
+      <button class="sales-filter-btn" data-filter="other">Other</button>
+    </div>
+    <span class="sales-count" id="listingCount">Showing 3 vehicles</span>
+  </div>
+</div>
+
+<!-- Listings -->
+<section class="sales-page">
+  <div class="container">
+    <div class="listings-grid" id="listingsGrid">
+
+      <!-- Listing 1: Austin Healey 3000 -->
+      <div class="listing-card fade-up" data-marque="austin-healey">
+        <div class="listing-img">
+          <div class="ph">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="rgba(138,154,176,0.5)" stroke-width="1.2">
+              <rect x="7" y="16" width="42" height="28" rx="1"/>
+              <circle cx="18" cy="44" r="5"/><circle cx="38" cy="44" r="5"/>
+              <path d="M7 30h42M16 16v-4a1 1 0 0 1 1-1h22a1 1 0 0 1 1 1v4"/>
+            </svg>
+            <span style="font-family:var(--ff-ui);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase">Add Photo</span>
+          </div>
+          <span class="listing-badge badge-sale">For Sale</span>
+        </div>
+        <div class="listing-body">
+          <p class="listing-marque">Austin Healey</p>
+          <h2 class="listing-title">3000 MkIII BJ8</h2>
+          <p class="listing-year">1967</p>
+          <div class="listing-specs">
+            <span class="listing-spec">Fully Restored</span>
+            <span class="listing-spec">Colorado Red</span>
+            <span class="listing-spec">RHD</span>
+            <span class="listing-spec">Concours Standard</span>
+          </div>
+          <p class="listing-desc">Concours-quality restoration completed in our workshop. Full photographic record of every stage. Correct factory specification throughout. Multiple show wins post-restoration. Ready for road or shows.</p>
+          <div class="listing-footer">
+            <span class="listing-price poa">Price on Application</span>
+            <a href="contact.html?ref=ah3000" class="btn btn-gold" style="padding:0.65rem 1.4rem;font-size:0.78rem">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listing 2: Jaguar Knobbly -->
+      <div class="listing-card fade-up" data-marque="jaguar race">
+        <div class="listing-img">
+          <div class="ph">
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="rgba(138,154,176,0.5)" stroke-width="1.2">
+              <rect x="7" y="16" width="42" height="28" rx="1"/>
+              <circle cx="18" cy="44" r="5"/><circle cx="38" cy="44" r="5"/>
+              <path d="M7 30h42M16 16v-4a1 1 0 0 1 1-1h22a1 1 0 0 1 1 1v4"/>
+            </svg>
+            <span style="font-family:var(--ff-ui);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase">Add Photo</span>
+          </div>
+          <span class="listing-badge badge-new">Featured</span>
+        </div>
+        <div class="listing-body">
+          <p class="listing-marque">Jaguar</p>
+          <h2 class="listing-title">Knobbly</h2>
+          <p class="listing-year">Race Specification</p>
+          <div class="listing-specs">
+            <span class="listing-spec">Race Ready</span>
+            <span class="listing-spec">FIA Specification</span>
+            <span class="listing-spec">Full History</span>
+          </div>
+          <p class="listing-desc">Exceptional example in full FIA race specification. Prepared and developed in our workshop. Full documentation and race history available. Contact us to arrange an inspection and full details.</p>
+          <div class="listing-footer">
+            <span class="listing-price poa">Price on Application</span>
+            <a href="contact.html?ref=jagknobbly" class="btn btn-gold" style="padding:0.65rem 1.4rem;font-size:0.78rem">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add listing card -->
+      <div class="admin-add-card fade-up" id="addListingCard" onclick="showAddListingInfo()">
+        <div class="add-icon">+</div>
+        <h3>Add a Listing</h3>
+        <p>Contact us to add a new vehicle to the sales page</p>
+        <a href="contact.html" class="btn btn-navy" style="margin-top:1.5rem" onclick="event.stopPropagation()">Get in Touch</a>
+      </div>
+
+    </div>
+
+    <!-- Empty state message (shown when no results) -->
+    <div id="noResults" style="display:none;text-align:center;padding:4rem 0">
+      <p style="font-family:var(--ff-body);font-size:1.2rem;color:var(--mist);font-style:italic">No vehicles currently listed in this category.<br>Please check back soon or <a href="contact.html" style="color:var(--gold-dim);text-decoration:underline">contact us</a> to discuss requirements.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How it works / buying info -->
+<section class="info-box">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-text fade-up">
+        <p class="t-subhead" style="color:var(--gold);margin-bottom:0.5rem">Buying from Merlin</p>
+        <h2>What to Expect</h2>
+        <p>Every vehicle we offer for sale has either been restored or prepared by our own team. We know these cars inside out — which means you can buy with confidence.</p>
+        <div class="info-points">
+          <div class="info-point">Full history and documentation provided where available</div>
+          <div class="info-point">Photographic record of any restoration work carried out</div>
+          <div class="info-point">Honest, transparent condition reports — no surprises</div>
+          <div class="info-point">Pre-sale preparation and inspection by our engineers</div>
+          <div class="info-point">We welcome pre-purchase inspections and viewings</div>
+          <div class="info-point">Ongoing servicing and maintenance available post-purchase</div>
+        </div>
+        <a href="contact.html" class="btn btn-gold" style="margin-top:0.5rem">Arrange a Viewing</a>
+      </div>
+      <div class="fade-up">
+        <div style="background:rgba(255,255,255,0.04);padding:2.5rem;border-left:2px solid var(--gold)">
+          <p class="t-subhead" style="color:var(--gold);margin-bottom:1rem">Want to sell your classic?</p>
+          <p style="font-family:var(--ff-body);font-size:1rem;color:var(--mist);line-height:1.75;font-weight:300;margin-bottom:1.25rem">We occasionally take vehicles on a sale-or-return basis, and may also be interested in purchasing the right cars outright. If you have a classic you're looking to sell, get in touch for an informal conversation.</p>
+          <a href="contact.html" class="btn btn-outline">Contact Us</a>
+        </div>
+        <div style="margin-top:1.5px;background:rgba(255,255,255,0.04);padding:2.5rem;border-left:2px solid rgba(255,255,255,0.1)">
+          <p class="t-subhead" style="color:var(--gold);margin-bottom:1rem">Valuations</p>
+          <p style="font-family:var(--ff-body);font-size:1rem;color:var(--mist);line-height:1.75;font-weight:300;margin-bottom:1.25rem">We offer professional valuations for classic vehicles — useful for insurance, estate purposes or if you're considering selling. Contact us to arrange.</p>
+          <a href="contact.html" class="btn btn-outline">Request a Valuation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>See a car that interests you?</h2>
+        <p>Call us for a chat or send a message — we're always happy to discuss any of our listed vehicles in detail.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="cta-phone">
+          <span class="lbl">Call us now</span>
+          <a href="tel:01663746499">01663 746499</a>
+        </div>
+        <a href="contact.html" class="btn btn-navy">Send a Message</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars"></div>
+        <p class="footer-desc">Established 1977. A family of restorers, engineers and enthusiasts based near Stockport, Cheshire.</p>
+        <p style="font-family:var(--ff-ui);font-size:0.8rem;color:var(--mist);margin-top:1.25rem">Unit 1C, The Ropery<br>Redmoor Lane, New Mills SK22 3JL</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html#maintenance">Servicing & Maintenance</a><a href="services.html#restoration">Full Restoration</a><a href="services.html">All Services</a></div>
+      <div class="footer-col"><h4>Gallery</h4><a href="gallery.html#austin-healey">Austin Healey</a><a href="gallery.html#jaguar">Jaguar</a><a href="gallery.html">Full Gallery</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:01663746499">01663 746499</a><a href="mailto:chris.merlinclassics@outlook.com">Send a Message</a><a href="contact.html">Contact Page</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Merlin Classic Cars. All rights reserved.</p>
+      <p>Austin Healey Specialists · Est. 1977 · Stockport, Cheshire</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+
+  // Filter functionality
+  const filterBtns = document.querySelectorAll('.sales-filter-btn');
+  const cards = document.querySelectorAll('.listing-card');
+  const countEl = document.getElementById('listingCount');
+  const noResults = document.getElementById('noResults');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      cards.forEach(card => {
+        const marques = card.dataset.marque || '';
+        const show = filter === 'all' || marques.includes(filter);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      countEl.textContent = `Showing ${visible} vehicle${visible !== 1 ? 's' : ''}`;
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+
+  // Fade-up
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+  fadeEls.forEach(el => obs.observe(el));
+
+  function showAddListingInfo() {}
+</script>
+</body>
+</html>

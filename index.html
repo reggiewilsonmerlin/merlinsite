@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merlin Classic Cars — Austin Healey & Classic Car Specialists, Stockport</title>
+  <meta name="description" content="Merlin Classic Cars — established 1977. Austin Healey restoration specialists and classic car experts based near Stockport. Full restoration, servicing, maintenance and cars for sale.">
+  <link rel="stylesheet" href="merlin.css">
+  <style>
+    /* ── Homepage-specific ── */
+    .hero { background: var(--navy); }
+
+    /* Marquee strip */
+    .marquee-strip {
+      background: var(--gold);
+      overflow: hidden;
+      padding: 0.65rem 0;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 2.5rem;
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .marquee-dot {
+      width: 4px; height: 4px;
+      background: var(--navy);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Services section */
+    .services-section {
+      background: var(--navy);
+      padding: var(--section-py) 0;
+    }
+
+    /* Featured work */
+    .work-section {
+      background: var(--cream);
+      padding: var(--section-py) 0;
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 3px;
+    }
+    .work-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .work-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 280px;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .work-item:hover img { transform: scale(1.05); }
+    .work-item.tall { grid-row: span 2; }
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,42,0.88) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.75rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .work-item:hover .work-overlay { opacity: 1; }
+    .work-overlay .tag {
+      font-family: var(--ff-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .work-overlay h3 {
+      font-family: var(--ff-display);
+      font-size: 1.25rem;
+      color: var(--white);
+    }
+
+    /* About strip */
+    .about-strip {
+      background: var(--parchment);
+      padding: var(--section-py) 0;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 120px;
+      height: 120px;
+      background: var(--gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.75rem;
+    }
+    .about-badge .num {
+      font-family: var(--ff-display);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .about-badge .lbl {
+      font-family: var(--ff-ui);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-top: 0.25rem;
+    }
+    .about-text .t-subhead { color: var(--gold-dim); margin-bottom: 0.75rem; }
+    .about-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+    .about-text p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #4a4a4a;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    .about-text .specialities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+    .spec-tag {
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.9rem;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      text-transform: uppercase;
+    }
+
+    /* Testimonials */
+    .reviews-section {
+      background: var(--navy);
+      padding: var(--section-py) 0;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(255,255,255,0.05);
+    }
+    .stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 1rem;
+      color: var(--gold);
+      font-size: 0.85rem;
+    }
+
+    /* CTA banner */
+    .cta-banner {
+      background: var(--gold);
+      padding: 4rem 0;
+    }
+    .cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .cta-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+    }
+    .cta-text p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      color: rgba(13,27,42,0.7);
+      margin-top: 0.5rem;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .cta-phone {
+      display: flex;
+      flex-direction: column;
+    }
+    .cta-phone .lbl {
+      font-family: var(--ff-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(13,27,42,0.6);
+      margin-bottom: 0.2rem;
+    }
+    .cta-phone a {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .cta-phone a:hover { color: var(--navy-light); }
+
+    /* Sale preview */
+    .sales-preview {
+      background: var(--cream);
+      padding: var(--section-py) 0;
+    }
+    .sales-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .placeholder-img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy-mid);
+      color: var(--mist);
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Marque strip */
+    .marques-section {
+      background: var(--parchment);
+      padding: 3rem 0;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .marques-label {
+      text-align: center;
+      font-family: var(--ff-ui);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 1.75rem;
+    }
+    .marques-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1rem;
+    }
+    .marque-name {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--navy);
+      opacity: 0.45;
+      transition: opacity 0.2s;
+    }
+    .marque-name:hover { opacity: 1; }
+
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-badge { bottom: -1rem; right: -0.5rem; }
+      .work-grid { grid-template-columns: 1fr; }
+      .work-item.tall { grid-row: span 1; }
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ────────────────────────────────────────── -->
+<nav class="site-nav" id="siteNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <div class="nav-item">
+        <a href="services.html">Services ▾</a>
+        <div class="nav-dropdown">
+          <a href="services.html#maintenance">Servicing & Maintenance</a>
+          <a href="services.html#restoration">Full Restoration</a>
+          <a href="services.html#bodywork">Bodywork & Paintwork</a>
+          <a href="services.html#engine">Engine & Drivetrain</a>
+          <a href="services.html#race">Race Preparation</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="gallery.html">Gallery ▾</a>
+        <div class="nav-dropdown">
+          <a href="gallery.html#austin-healey">Austin Healey</a>
+          <a href="gallery.html#sprite">Healey Sprite</a>
+          <a href="gallery.html#jaguar">Jaguar</a>
+          <a href="gallery.html#mg">MG</a>
+          <a href="gallery.html#other">Other Marques</a>
+        </div>
+      </div>
+      <a href="sales.html">Cars for Sale</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <div class="nav-cta">
+      <a href="tel:01663746499" class="nav-phone">01663 746499</a>
+      <button class="nav-burger" id="burgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="sales.html">Cars for Sale</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:01663746499" class="mobile-menu nav-phone-big">01663 746499</a>
+</div>
+
+<!-- ── Hero ──────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <img src="uploads/photos-1777807599577.jpeg" alt="Austin Healey restorations by Merlin Classic Cars" class="hero-img">
+  <div class="hero-grad"></div>
+
+  <div class="hero-content container">
+    <p class="t-subhead hero-label">Est. 1977 · Stockport, Cheshire</p>
+    <h1 class="hero-title">Guardians of the <em>Great British</em> Classic</h1>
+    <p class="hero-sub">Merlin Classic Cars — a family of restorers, engineers and enthusiasts with over 45 years of experience. Austin Healey specialists and so much more.</p>
+    <div class="hero-actions">
+      <a href="gallery.html" class="btn btn-gold">View Our Work</a>
+      <a href="services.html" class="btn btn-outline">Our Services</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ── Marquee ────────────────────────────────────────────── -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Austin Healey Specialists <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Concours Award Winners <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Full Restoration <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Servicing & Maintenance <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Race Preparation <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Bespoke Fabrication <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Est. 1977 <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Stockport, Cheshire <span class="marquee-dot"></span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Austin Healey Specialists <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Concours Award Winners <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Full Restoration <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Servicing & Maintenance <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Race Preparation <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Bespoke Fabrication <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Est. 1977 <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Stockport, Cheshire <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- ── Services ───────────────────────────────────────────── -->
+<section class="services-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="t-subhead" style="color:var(--gold)">What We Do</p>
+      <h2 style="color:var(--cream)">The Complete Classic Car <em style="font-style:italic">Service</em></h2>
+      <p>From a routine oil change to a full concours restoration — we have the skills, tools and passion to care for your vehicle at every stage of its life.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="22" cy="22" r="18"/>
+          <path d="M22 10v12l7 4"/>
+          <circle cx="22" cy="22" r="3" fill="currentColor" stroke="none"/>
+        </svg>
+        <h3>Servicing & Maintenance</h3>
+        <p>Routine servicing, MOT preparation, oil & fluid changes, brake inspections, carburettor tuning and general mechanical upkeep — keeping your classic running beautifully year-round.</p>
+        <a href="services.html#maintenance" class="service-link">Learn more →</a>
+      </div>
+
+      <div class="service-card fade-up">
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="4" y="14" width="36" height="22" rx="1"/>
+          <path d="M14 14V10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/>
+          <path d="M4 22h36"/>
+          <circle cx="14" cy="32" r="3"/>
+          <circle cx="30" cy="32" r="3"/>
+        </svg>
+        <h3>Full Restoration</h3>
+        <p>From bare metal strip to concours-ready finish. We photograph every stage, giving your car a documented history of its transformation. Multiple award-winning restorations in our portfolio.</p>
+        <a href="services.html#restoration" class="service-link">Learn more →</a>
+      </div>
+
+      <div class="service-card fade-up">
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 32 C10 20 16 14 22 14 C28 14 34 20 38 32"/>
+          <path d="M6 32 Q14 28 22 28 Q30 28 38 32"/>
+          <path d="M14 20 Q18 24 22 24 Q26 24 30 20"/>
+        </svg>
+        <h3>Bodywork & Paintwork</h3>
+        <p>Expert panel fabrication, rust repair, bodyshell restoration and finishing to any specification. From factory-correct colours to custom finishes including House of Kolor and bare-metal work.</p>
+        <a href="services.html#bodywork" class="service-link">Learn more →</a>
+      </div>
+
+      <div class="service-card fade-up">
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="22" cy="22" r="8"/>
+          <path d="M22 4v4M22 36v4M4 22h4M36 22h4"/>
+          <path d="M9.2 9.2l2.8 2.8M32 32l2.8 2.8M9.2 34.8l2.8-2.8M32 12l2.8-2.8"/>
+          <circle cx="22" cy="22" r="3" fill="currentColor" stroke="none"/>
+        </svg>
+        <h3>Engine & Drivetrain</h3>
+        <p>Full engine rebuilds, gearbox and differential overhauls, clutch replacement, cooling systems and more. Sympathetic to original specs or upgraded for performance — your choice.</p>
+        <a href="services.html#engine" class="service-link">Learn more →</a>
+      </div>
+
+      <div class="service-card fade-up">
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 32L4 28l6-14 6 4"/>
+          <path d="M36 32l4-4-6-14-6 4"/>
+          <ellipse cx="22" cy="20" rx="8" ry="5"/>
+          <path d="M14 22c0 5.5 3.6 10 8 10s8-4.5 8-10"/>
+        </svg>
+        <h3>Race Preparation</h3>
+        <p>Full race preparation and race day support. We have prepared multiple competitive vehicles including Austin Healey, Austin Seven and MGB GT race cars with proven track records.</p>
+        <a href="services.html#race" class="service-link">Learn more →</a>
+      </div>
+
+      <div class="service-card fade-up">
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10 34 L10 20 L22 8 L34 20 L34 34 Z"/>
+          <rect x="17" y="26" width="10" height="8"/>
+          <path d="M14 20 h16"/>
+        </svg>
+        <h3>Bespoke & Specialist Work</h3>
+        <p>One-off builds, coach-building, custom panel fabrication, insurance repairs, valuations and vehicle transportation. No project is too rare or unusual for our team.</p>
+        <a href="services.html" class="service-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats ──────────────────────────────────────────────── -->
+<div class="navy-bg" style="border-top:1px solid rgba(255,255,255,0.06)">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-item fade-up">
+        <div class="stat-num">45+</div>
+        <div class="stat-label">Years in Business</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Restorations Completed</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Concours Awards</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-num">18+</div>
+        <div class="stat-label">Marques Worked On</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Featured Work ──────────────────────────────────────── -->
+<section class="work-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="t-subhead" style="color:var(--gold-dim)">Our Portfolio</p>
+      <h2 style="color:var(--navy)">Selected Work</h2>
+      <p style="color:#5a5a5a">A glimpse at recent restorations and projects. Each car photographed throughout its journey from strip-down to completion.</p>
+    </div>
+  </div>
+
+  <div style="padding:0 var(--gutter);max-width:var(--max-w);margin:0 auto">
+    <div class="work-grid">
+      <div class="work-item tall">
+        <img src="uploads/photos-1777807599577.jpeg" alt="Austin Healey Race Spec">
+        <div class="work-overlay">
+          <div class="tag">Austin Healey</div>
+          <h3>Race Prepared Healeys — BMC Competition</h3>
+        </div>
+      </div>
+      <div class="work-item">
+        <div style="height:280px;background:var(--navy-mid);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.75rem">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(232,185,35,0.5)" stroke-width="1.2">
+            <rect x="6" y="14" width="36" height="24" rx="1"/>
+            <circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/>
+            <path d="M6 26h36M14 14v-3a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v3"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:var(--mist);text-transform:uppercase">Gallery Photo</span>
+        </div>
+        <div class="work-overlay" style="opacity:0.8">
+          <div class="tag">Concours Winner</div>
+          <h3>Austin Healey 100-4 — Concours d'Elegance</h3>
+        </div>
+      </div>
+      <div class="work-item">
+        <div style="height:280px;background:var(--navy-light);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.75rem">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(232,185,35,0.5)" stroke-width="1.2">
+            <rect x="6" y="14" width="36" height="24" rx="1"/>
+            <circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/>
+            <path d="M6 26h36M14 14v-3a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v3"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:var(--mist);text-transform:uppercase">Gallery Photo</span>
+        </div>
+        <div class="work-overlay" style="opacity:0.8">
+          <div class="tag">MG Expertise</div>
+          <h3>MGB GT — Race Specification Build</h3>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="gallery.html" class="btn btn-navy">Browse Full Gallery →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Marques ─────────────────────────────────────────────── -->
+<div class="marques-section">
+  <div class="container">
+    <p class="marques-label">Marques we work with</p>
+    <div class="marques-list">
+      <span class="marque-name">Austin Healey</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Jaguar</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">MG</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Triumph</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Rolls Royce</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Ford</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Mini</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Morris</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Sunbeam</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Humber</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Mercedes</span>
+      <span class="marque-name">·</span>
+      <span class="marque-name">Renault</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── About strip ────────────────────────────────────────── -->
+<section class="about-strip">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-up">
+        <img src="uploads/photos-1777807599577.jpeg" alt="Merlin Classic Cars workshop">
+        <div class="about-badge">
+          <span class="num">45+</span>
+          <span class="lbl">Years of Expertise</span>
+        </div>
+      </div>
+
+      <div class="about-text fade-up">
+        <p class="t-subhead">Our Story</p>
+        <h2>A Family Passion <em style="font-style:italic;color:var(--gold-dim)">Since 1977</em></h2>
+        <p>Based near Stockport, our family has been in the classic and vintage vehicle restoration business since before we ever opened our doors commercially. We are a small, dedicated family business — established formally in 1983 — with a pedigree stretching back to 1977.</p>
+        <p>We are renowned Austin Healey restoration specialists, but our expertise extends to virtually every British and European classic. No vehicle is too rare or unusual — we have helped produce a one-off Delage D8S, one of only two remaining in the world, and the Austin Healey BN3 now housed in the Austin Healey Museum.</p>
+        <div class="specialities">
+          <span class="spec-tag">Austin Healey</span>
+          <span class="spec-tag">E-Type Jaguar</span>
+          <span class="spec-tag">Rolls Royce</span>
+          <span class="spec-tag">MG</span>
+          <span class="spec-tag">Healey Sprite</span>
+          <span class="spec-tag">Concours Work</span>
+        </div>
+        <a href="about.html" class="btn btn-navy">About Merlin →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Reviews ────────────────────────────────────────────── -->
+<section class="reviews-section">
+  <div class="container">
+    <div class="section-header center fade-up">
+      <span class="rule-gold center"></span>
+      <p class="t-subhead" style="color:var(--gold)">Customer Testimonials</p>
+      <h2 style="color:var(--cream)">What Our Clients Say</h2>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The restoration of my Austin Healey 3000 was absolutely beyond my expectations. Chris and the team's attention to detail is extraordinary — the car won best in class at its first concours after the restoration."</blockquote>
+        <p class="testimonial-author">— Austin Healey 3000 Owner</p>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I've had my Frogeye Sprite serviced here for the last six years. Honest, knowledgeable and genuinely passionate about these cars. Wouldn't trust anyone else with her."</blockquote>
+        <p class="testimonial-author">— Austin Healey Sprite Owner</p>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"From the initial estimate right through to collection, communication was excellent. The E-Type came back looking better than it ever did from the factory. Truly world-class work."</blockquote>
+        <p class="testimonial-author">— Jaguar E-Type Owner</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="about.html#reviews" class="btn btn-outline">Read More Reviews</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Cars for Sale preview ──────────────────────────────── -->
+<section class="sales-preview">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem" class="fade-up">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.5rem">Cars for Sale</p>
+        <h2 style="color:var(--navy);font-family:var(--ff-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700">Currently Available</h2>
+      </div>
+      <a href="sales.html" class="btn btn-navy" style="align-self:flex-end">View All Cars →</a>
+    </div>
+
+    <div class="sales-grid">
+      <!-- Placeholder cards — replace with real listings -->
+      <div class="sale-card fade-up">
+        <div class="sale-img">
+          <div class="placeholder-img">
+            <div style="text-align:center">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(138,154,176,0.6)" stroke-width="1.2" style="margin:0 auto 0.5rem">
+                <rect x="6" y="14" width="36" height="24" rx="1"/>
+                <circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/>
+                <path d="M6 26h36M14 14v-3a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v3"/>
+              </svg>
+              <div>Add listing photo</div>
+            </div>
+          </div>
+          <span class="sale-badge">For Sale</span>
+        </div>
+        <div class="sale-body">
+          <h3>Austin Healey 3000 MkIII</h3>
+          <p class="year">1967 · BJ8</p>
+          <div class="sale-specs">
+            <span class="sale-spec">🔧 Fully Restored</span>
+            <span class="sale-spec">🎨 Colorado Red</span>
+          </div>
+          <p style="font-family:var(--ff-ui);font-size:0.85rem;color:#666;margin-top:0.75rem;line-height:1.6">Concours-quality restoration completed in our workshop. Full photographic record available. Ready for shows or road use.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem">
+            <span class="sale-price">POA</span>
+            <a href="sales.html" class="btn btn-gold" style="padding:0.6rem 1.25rem;font-size:0.75rem">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sale-card fade-up">
+        <div class="sale-img">
+          <div class="placeholder-img">
+            <div style="text-align:center">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(138,154,176,0.6)" stroke-width="1.2" style="margin:0 auto 0.5rem">
+                <rect x="6" y="14" width="36" height="24" rx="1"/>
+                <circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/>
+                <path d="M6 26h36M14 14v-3a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v3"/>
+              </svg>
+              <div>Add listing photo</div>
+            </div>
+          </div>
+          <span class="sale-badge">For Sale</span>
+        </div>
+        <div class="sale-body">
+          <h3>Jaguar Knobbly</h3>
+          <p class="year">Race Specification</p>
+          <div class="sale-specs">
+            <span class="sale-spec">🏁 Race Ready</span>
+            <span class="sale-spec">🔩 FIA Spec</span>
+          </div>
+          <p style="font-family:var(--ff-ui);font-size:0.85rem;color:#666;margin-top:0.75rem;line-height:1.6">Exceptional race-prepared vehicle. Full FIA specification build. Contact us for full details and inspection.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem">
+            <span class="sale-price">POA</span>
+            <a href="sales.html" class="btn btn-gold" style="padding:0.6rem 1.25rem;font-size:0.75rem">Enquire</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sale-card fade-up" style="display:flex;align-items:center;justify-content:center;min-height:400px;background:var(--parchment);border:2px dashed rgba(0,0,0,0.1)">
+        <div style="text-align:center;padding:2rem">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="var(--navy)" stroke-width="1.2" style="margin:0 auto 1rem;opacity:0.3">
+            <circle cx="24" cy="24" r="18"/>
+            <path d="M24 16v16M16 24h16"/>
+          </svg>
+          <p style="font-family:var(--ff-ui);font-size:0.85rem;color:#999;max-width:20ch;margin:0 auto">More listings coming soon — contact us to enquire</p>
+          <a href="contact.html" class="btn btn-navy" style="margin-top:1.5rem;padding:0.65rem 1.5rem">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Banner ─────────────────────────────────────────── -->
+<div class="cta-banner">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Ready to discuss your vehicle?</h2>
+        <p>Whether it's a service, an estimate, or a full restoration — we're always happy to have a conversation.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="cta-phone">
+          <span class="lbl">Call us today</span>
+          <a href="tel:01663746499">01663 746499</a>
+        </div>
+        <a href="contact.html" class="btn btn-navy">Send a Message</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+        </div>
+        <p class="footer-desc">Established 1977. A family of restorers, engineers and enthusiasts based near Stockport, Cheshire. Austin Healey specialists and so much more.</p>
+        <p style="font-family:var(--ff-ui);font-size:0.8rem;color:var(--mist);margin-top:1.25rem">Unit 1C, The Ropery<br>Redmoor Lane, New Mills SK22 3JL</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="services.html#maintenance">Servicing & Maintenance</a>
+        <a href="services.html#restoration">Full Restoration</a>
+        <a href="services.html#bodywork">Bodywork & Paintwork</a>
+        <a href="services.html#engine">Engine & Drivetrain</a>
+        <a href="services.html#race">Race Preparation</a>
+        <a href="services.html">All Services</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Gallery</h4>
+        <a href="gallery.html#austin-healey">Austin Healey</a>
+        <a href="gallery.html#sprite">Healey Sprite</a>
+        <a href="gallery.html#jaguar">Jaguar</a>
+        <a href="gallery.html#mg">MG</a>
+        <a href="gallery.html#other">Other Marques</a>
+        <a href="gallery.html">Full Gallery</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:01663746499">01663 746499</a>
+        <a href="mailto:chris.merlinclassics@outlook.com">chris.merlinclassics@<br>outlook.com</a>
+        <a href="sales.html" style="margin-top:0.5rem">Cars for Sale</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Send a Message</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Merlin Classic Cars. All rights reserved.</p>
+      <p>Austin Healey Specialists · Est. 1977 · Stockport, Cheshire</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Nav scroll behaviour
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  // Start scrolled if needed
+  if (window.scrollY > 60) nav.classList.add('scrolled');
+
+  // ── Mobile menu
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+  burger.addEventListener('click', () => mobileMenu.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+  // ── Fade-up on scroll
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

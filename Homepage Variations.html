@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merlin Classic Cars — Homepage Variations</title>
+  <link rel="stylesheet" href="merlin.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #1a1a1a; font-family: sans-serif; overflow: hidden; }
+
+    /* ── Shared fonts (loaded once) ── */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Anton&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+    /* Artboard frames */
+    .artboard-frame {
+      width: 1440px;
+      min-height: 900px;
+      overflow: hidden;
+      position: relative;
+      background: #f5f0e8;
+    }
+
+    /* ───────────────────────────────────────────────────────
+       VARIANT A — Heritage-Editorial (the one already built)
+       Dark navy base, gold accent, Playfair Display
+    ─────────────────────────────────────────────────────── */
+    .va {
+      --c-navy: #0d1b2a;
+      --c-navy2: #162236;
+      --c-gold: #e8b923;
+      --c-cream: #f5f0e8;
+      --c-mist: #8a9ab0;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--c-navy);
+      color: var(--c-cream);
+    }
+    .va-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4rem; height: 76px;
+      background: rgba(13,27,42,0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .va-nav img { height: 48px; }
+    .va-nav-links { display: flex; gap: 2rem; }
+    .va-nav-links a {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.75);
+      text-decoration: none;
+    }
+    .va-nav-links a:hover { color: var(--c-gold); }
+    .va-phone {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--c-gold);
+    }
+    .va-hero {
+      position: relative; height: 620px;
+      display: flex; align-items: flex-end;
+      overflow: hidden; background: var(--c-navy);
+    }
+    .va-hero-img {
+      position: absolute; inset: 0;
+      object-fit: cover; width: 100%; height: 100%; opacity: 0.5;
+    }
+    .va-hero-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,27,42,0.1) 0%, rgba(13,27,42,0.7) 60%, rgba(13,27,42,0.97) 100%);
+    }
+    .va-hero-content { position: relative; z-index: 2; padding: 0 4rem 3.5rem; }
+    .va-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--c-gold); margin-bottom: 0.75rem;
+    }
+    .va-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 5.5rem; font-weight: 900; line-height: 0.95;
+      color: #fff; margin-bottom: 1rem; max-width: 10ch;
+    }
+    .va-title em { font-style: italic; color: var(--c-gold); }
+    .va-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: rgba(255,255,255,0.7);
+      max-width: 44ch; line-height: 1.65; font-weight: 300;
+      margin-bottom: 2rem;
+    }
+    .va-btns { display: flex; gap: 1rem; }
+    .va-btn-gold {
+      display: inline-block; padding: 0.85rem 2rem;
+      background: var(--c-gold); color: var(--c-navy);
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    .va-btn-out {
+      display: inline-block; padding: 0.85rem 2rem;
+      border: 1.5px solid rgba(255,255,255,0.35); color: #fff;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+    }
+    .va-strip {
+      background: var(--c-gold); padding: 0.6rem 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .va-strip-inner {
+      display: inline-flex; gap: 0;
+      animation: marqueeA 22s linear infinite;
+    }
+    .va-strip-item {
+      display: inline-flex; align-items: center; gap: 1rem;
+      padding: 0 2.5rem;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--c-navy);
+    }
+    @keyframes marqueeA { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .va-services {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: rgba(255,255,255,0.05);
+      margin: 0;
+    }
+    .va-svc {
+      background: var(--c-navy2); padding: 2rem 2.25rem;
+      border-top: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .va-svc:hover { border-top-color: var(--c-gold); }
+    .va-svc h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--c-cream);
+      margin-bottom: 0.5rem;
+    }
+    .va-svc p { font-size: 0.82rem; color: var(--c-mist); line-height: 1.6; }
+    .va-svc-link {
+      display: inline-block; margin-top: 0.75rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--c-gold); text-decoration: none;
+    }
+    .va-footer {
+      background: rgba(255,255,255,0.03); padding: 2rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .va-footer p { font-size: 0.78rem; color: var(--c-mist); }
+
+    /* ───────────────────────────────────────────────────────
+       VARIANT B — Raw Motorsport
+       Off-white/paper base, bold black type, yellow as shock accent
+       Anton (condensed display), industrial grid feel
+    ─────────────────────────────────────────────────────── */
+    .vb {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0ebe0;
+      color: #111;
+    }
+    .vb-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 72px;
+      background: #111; border-bottom: 3px solid #e8b923;
+    }
+    .vb-nav img { height: 44px; filter: invert(1) brightness(2); }
+    .vb-nav-links { display: flex; gap: 0; }
+    .vb-nav-links a {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7);
+      text-decoration: none; padding: 0 1.25rem; height: 72px;
+      display: flex; align-items: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.15s, background 0.15s;
+    }
+    .vb-nav-links a:hover { color: #e8b923; background: rgba(255,255,255,0.04); }
+    .vb-phone {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.35rem; letter-spacing: 0.05em; color: #e8b923;
+    }
+
+    .vb-hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .vb-hero-left {
+      background: #111;
+      padding: 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .vb-hero-left::after {
+      content: '77';
+      position: absolute; bottom: -2rem; right: -1rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 18rem; color: rgba(255,255,255,0.03);
+      line-height: 1; pointer-events: none;
+    }
+    .vb-est {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: #e8b923;
+    }
+    .vb-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 6.5rem; line-height: 0.9;
+      color: #fff; letter-spacing: 0.02em;
+      position: relative; z-index: 1;
+    }
+    .vb-title span { color: #e8b923; }
+    .vb-sub {
+      font-size: 0.875rem; color: rgba(255,255,255,0.55);
+      line-height: 1.7; max-width: 36ch; font-weight: 300;
+    }
+    .vb-btns { display: flex; gap: 0.75rem; }
+    .vb-btn-y {
+      padding: 0.85rem 1.75rem;
+      background: #e8b923; color: #111;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; display: inline-block;
+    }
+    .vb-btn-w {
+      padding: 0.85rem 1.75rem;
+      background: transparent; color: rgba(255,255,255,0.8);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; display: inline-block;
+    }
+    .vb-hero-right {
+      position: relative; overflow: hidden; background: #222;
+    }
+    .vb-hero-right img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; opacity: 0.8;
+    }
+    .vb-hero-right-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(17,17,17,0.4) 0%, transparent 60%);
+    }
+    .vb-ticker {
+      background: #e8b923; padding: 0.55rem 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .vb-ticker-inner {
+      display: inline-flex;
+      animation: marqueeA 20s linear infinite;
+    }
+    .vb-ticker-item {
+      display: inline-flex; align-items: center; gap: 1.5rem;
+      padding: 0 2rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.12em; color: #111;
+    }
+    .vb-ticker-item span { opacity: 0.4; }
+
+    .vb-services-head {
+      padding: 3rem 3rem 1.5rem;
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+    .vb-services-head h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 3.5rem; line-height: 1; letter-spacing: 0.02em; color: #111;
+    }
+    .vb-services-head .sub {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #888; margin-bottom: 0.35rem;
+    }
+    .vb-services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: #ddd7cb; margin: 0 3rem 3rem;
+    }
+    .vb-svc-card {
+      background: #f0ebe0; padding: 1.75rem 2rem;
+      border-left: 3px solid transparent; transition: border-color 0.2s, background 0.2s;
+    }
+    .vb-svc-card:hover { border-left-color: #e8b923; background: #ede7d9; }
+    .vb-svc-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.5rem; color: #e8b923; line-height: 1; margin-bottom: 0.75rem;
+      opacity: 0.8;
+    }
+    .vb-svc-card h3 {
+      font-size: 0.95rem; font-weight: 700; color: #111;
+      margin-bottom: 0.4rem; letter-spacing: 0.02em;
+    }
+    .vb-svc-card p { font-size: 0.8rem; color: #666; line-height: 1.6; }
+
+    .vb-cta {
+      background: #111; padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .vb-cta h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2.5rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .vb-cta h3 span { color: #e8b923; }
+    .vb-cta-right { display: flex; align-items: center; gap: 3rem; }
+    .vb-cta-phone { display: flex; flex-direction: column; }
+    .vb-cta-phone .lbl {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.2rem;
+    }
+    .vb-cta-phone a {
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem; color: #e8b923; text-decoration: none;
+    }
+
+
+    /* ───────────────────────────────────────────────────────
+       VARIANT C — Refined Gentleman's Club
+       Warm cream/parchment, deep navy, Cormorant + DM Sans
+       Serif-heavy, editorial magazine feel, very British
+    ─────────────────────────────────────────────────────── */
+    .vc {
+      font-family: 'Cormorant Garamond', serif;
+      background: #f7f2e8;
+      color: #1a1a1a;
+    }
+    .vc-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4rem; height: 80px;
+      background: #f7f2e8;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .vc-nav img { height: 52px; }
+    .vc-nav-links { display: flex; gap: 2.5rem; }
+    .vc-nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #555;
+      text-decoration: none; transition: color 0.2s;
+    }
+    .vc-nav-links a:hover { color: #0d1b2a; }
+    .vc-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .vc-phone {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700; color: #0d1b2a;
+    }
+    .vc-contact-btn {
+      display: inline-block; padding: 0.6rem 1.5rem;
+      background: #0d1b2a; color: #e8b923;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+    }
+
+    /* Thin gold rule */
+    .vc-rule { height: 1px; background: #c49e18; margin: 0 4rem; }
+
+    .vc-hero {
+      display: grid; grid-template-columns: 5fr 4fr;
+      min-height: 560px;
+      position: relative;
+    }
+    .vc-hero-left {
+      padding: 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+      background: #f7f2e8; position: relative;
+    }
+    .vc-hero-left::after {
+      content: '';
+      position: absolute; top: 4rem; right: 0;
+      width: 1px; height: calc(100% - 8rem);
+      background: rgba(0,0,0,0.1);
+    }
+    .vc-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #c49e18; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .vc-tag::before { content: ''; display: block; width: 32px; height: 1px; background: #c49e18; }
+    .vc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 4.25rem; font-weight: 900; line-height: 1.0;
+      color: #0d1b2a; margin-bottom: 1.5rem;
+    }
+    .vc-title em { font-style: italic; color: #c49e18; }
+    .vc-body {
+      font-size: 1.1rem; line-height: 1.8; color: #555;
+      max-width: 46ch; font-weight: 300; margin-bottom: 2.5rem;
+    }
+    .vc-btns { display: flex; gap: 1rem; align-items: center; }
+    .vc-btn-navy {
+      padding: 0.9rem 2rem; background: #0d1b2a; color: #e8b923;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none; display: inline-block;
+    }
+    .vc-btn-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #0d1b2a; text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .vc-hero-right {
+      position: relative; overflow: hidden;
+      background: #0d1b2a;
+    }
+    .vc-hero-right img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; opacity: 0.75;
+    }
+    .vc-hero-right-badge {
+      position: absolute; bottom: 2rem; left: 2rem;
+      background: #e8b923; padding: 1rem 1.5rem;
+    }
+    .vc-hero-right-badge .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900; color: #0d1b2a; line-height: 1;
+    }
+    .vc-hero-right-badge .lbl {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #0d1b2a;
+    }
+
+    .vc-strip {
+      background: #0d1b2a; padding: 0 4rem;
+      display: flex; align-items: stretch;
+    }
+    .vc-strip-item {
+      flex: 1; padding: 1.5rem 0;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 0.3rem;
+    }
+    .vc-strip-item:last-child { border-right: none; }
+    .vc-strip-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem; font-weight: 900; color: #e8b923; line-height: 1;
+    }
+    .vc-strip-lbl {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+    }
+
+    .vc-services { padding: 3.5rem 4rem 0; }
+    .vc-services-head { margin-bottom: 2rem; }
+    .vc-services-head .label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #c49e18; margin-bottom: 0.5rem;
+    }
+    .vc-services-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 700; color: #0d1b2a;
+      line-height: 1.1;
+    }
+    .vc-services-head h2 em { font-style: italic; }
+
+    .vc-svc-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: rgba(0,0,0,0.07);
+    }
+    .vc-svc {
+      background: #f7f2e8; padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: background 0.2s;
+    }
+    .vc-svc:hover { background: #ede7d9; }
+    .vc-svc::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: #e8b923;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .vc-svc:hover::before { transform: scaleX(1); }
+    .vc-svc h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: #0d1b2a;
+      margin-bottom: 0.5rem;
+    }
+    .vc-svc p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem; color: #777; line-height: 1.65;
+    }
+    .vc-svc-link {
+      display: inline-block; margin-top: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #c49e18; text-decoration: none;
+    }
+
+    .vc-cta {
+      margin: 3rem 4rem 0;
+      background: #0d1b2a; padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .vc-cta-left {}
+    .vc-cta-left .label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.4rem;
+    }
+    .vc-cta-left h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem; font-weight: 700; color: #f5f0e8; line-height: 1.15;
+    }
+    .vc-cta-right { display: flex; align-items: center; gap: 2.5rem; }
+    .vc-cta-phone .lbl {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.2rem;
+    }
+    .vc-cta-phone a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem; font-weight: 900; color: #e8b923; text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel">
+const { DCArtboard, DCSection } = window;
+
+/* ── shared image path ── */
+const PHOTO = 'uploads/photos-1777807599577.jpeg';
+const LOGO  = 'uploads/logo-1777807456164.png';
+
+/* ── Marquee helper ── */
+function Marquee({ items, cls, itemCls, sep = '·' }) {
+  const doubled = [...items, ...items];
+  return (
+    <div className={cls} aria-hidden="true">
+      <div style={{display:'inline-flex',animation:'marqueeA 22s linear infinite'}}>
+        {doubled.map((t, i) => (
+          <span key={i} className={itemCls}>{t}<span style={{opacity:0.35,marginLeft:'1rem'}}>{sep}</span></span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const SERVICES_A = [
+  { title: 'Servicing & Maintenance', desc: 'Oil changes, MOT prep, carburettor tuning, brakes and general upkeep. The most cost-effective way to keep your classic at its best.' },
+  { title: 'Full Restoration', desc: 'Bare-metal to concours finish. Award-winning results with full photographic documentation throughout every stage.' },
+  { title: 'Bodywork & Paintwork', desc: 'Panel fabrication, rust repair, factory-correct colour or bespoke custom finishes. From minor repairs to full resprays.' },
+  { title: 'Engine & Drivetrain', desc: 'Full rebuilds, gearbox and differential overhauls, clutch, cooling and carburettor work across all classic marques.' },
+  { title: 'Race Preparation', desc: 'Full race builds and FIA specification work. Race day support available. Proven results on track.' },
+  { title: 'Bespoke Fabrication', desc: 'One-off builds, coach-building, custom panels and unusual projects. No vehicle too rare or unusual.' },
+];
+
+/* ════════════════════════════════════════════════════════════
+   VARIANT A — Heritage Editorial (dark navy)
+════════════════════════════════════════════════════════════ */
+function VariantA() {
+  return (
+    <div className="artboard-frame va">
+      {/* Nav */}
+      <nav className="va-nav">
+        <img src={LOGO} alt="Merlin Classic Cars" />
+        <div className="va-nav-links">
+          {['Home','Services','Gallery','Cars for Sale','About','Contact'].map(l => (
+            <a key={l} href="#">{l}</a>
+          ))}
+        </div>
+        <span className="va-phone">01663 746499</span>
+      </nav>
+
+      {/* Hero */}
+      <div className="va-hero">
+        <img src={PHOTO} alt="" className="va-hero-img" />
+        <div className="va-hero-grad" />
+        <div className="va-hero-content">
+          <p className="va-label">Est. 1977 · Stockport, Cheshire</p>
+          <h1 className="va-title">Guardians of the <em>Great British</em> Classic</h1>
+          <p className="va-sub">Merlin Classic Cars — a family of restorers and engineers with over 45 years of experience. Austin Healey specialists and so much more.</p>
+          <div className="va-btns">
+            <a href="#" className="va-btn-gold">View Our Work</a>
+            <a href="#" className="va-btn-out">Our Services</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Marquee */}
+      <Marquee
+        cls="va-strip"
+        itemCls="va-strip-item"
+        sep="·"
+        items={['Austin Healey Specialists','Concours Award Winners','Full Restoration','Servicing & Maintenance','Race Preparation','Est. 1977']}
+      />
+
+      {/* Services */}
+      <div className="va-services">
+        {SERVICES_A.map(s => (
+          <div key={s.title} className="va-svc">
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <a href="#" className="va-svc-link">Learn more →</a>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer strip */}
+      <div className="va-footer">
+        <img src={LOGO} alt="" style={{height:40}} />
+        <p>Unit 1C, The Ropery · New Mills SK22 3JL · 01663 746499</p>
+        <p>© 2026 Merlin Classic Cars</p>
+      </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════
+   VARIANT B — Raw Motorsport (bold black + yellow)
+════════════════════════════════════════════════════════════ */
+function VariantB() {
+  const svcs = [
+    { n:'01', title:'Servicing & Maintenance', desc:'Routine servicing, MOT prep, carburettor tuning and year-round mechanical upkeep.' },
+    { n:'02', title:'Full Restoration', desc:'Award-winning concours restorations with full photographic documentation.' },
+    { n:'03', title:'Bodywork & Paint', desc:'Bare-metal work to bespoke custom finishes. Any specification, any marque.' },
+    { n:'04', title:'Engine & Drivetrain', desc:'Complete engine rebuilds, gearbox and differential overhaul across all classics.' },
+    { n:'05', title:'Race Preparation', desc:'FIA-spec builds and race day support. Proven on track.' },
+    { n:'06', title:'Bespoke Builds', desc:'One-off fabrication and coach-building. No project too unusual.' },
+  ];
+  return (
+    <div className="artboard-frame vb">
+      {/* Nav */}
+      <nav className="vb-nav">
+        <img src={LOGO} alt="Merlin Classic Cars" />
+        <div className="vb-nav-links">
+          {['Services','Gallery','Cars for Sale','About','Contact'].map(l => (
+            <a key={l} href="#">{l}</a>
+          ))}
+        </div>
+        <span className="vb-phone">01663 746499</span>
+      </nav>
+
+      {/* Hero — split grid */}
+      <div className="vb-hero">
+        <div className="vb-hero-left">
+          <p className="vb-est">Est. 1977 · Stockport, Cheshire</p>
+          <h1 className="vb-title">CLASSIC<br/><span>CARS</span><br/>DONE<br/>RIGHT.</h1>
+          <p className="vb-sub">Austin Healey specialists and renowned restorers of all classic marques. Over 45 years of family expertise — from a routine service to a full concours restoration.</p>
+          <div className="vb-btns">
+            <a href="#" className="vb-btn-y">View Our Work</a>
+            <a href="#" className="vb-btn-w">Call 01663 746499</a>
+          </div>
+        </div>
+        <div className="vb-hero-right">
+          <img src={PHOTO} alt="Austin Healey restorations" />
+          <div className="vb-hero-right-overlay" />
+        </div>
+      </div>
+
+      {/* Ticker */}
+      <div className="vb-ticker">
+        <div className="vb-ticker-inner">
+          {[...['Austin Healey','Jaguar','MG','Rolls Royce','Triumph','Ford','Mini','Concours Winners','Race Prep','Est. 1977'],
+            ...['Austin Healey','Jaguar','MG','Rolls Royce','Triumph','Ford','Mini','Concours Winners','Race Prep','Est. 1977']].map((t,i) => (
+            <span key={i} className="vb-ticker-item">{t}<span>◆</span></span>
+          ))}
+        </div>
+      </div>
+
+      {/* Services */}
+      <div className="vb-services-head">
+        <div>
+          <p className="sub">What we offer</p>
+          <h2>OUR SERVICES</h2>
+        </div>
+        <a href="#" style={{fontFamily:'Anton,sans-serif',fontSize:'0.9rem',letterSpacing:'0.1em',color:'#111',textDecoration:'none',borderBottom:'2px solid #e8b923',paddingBottom:'2px'}}>VIEW ALL →</a>
+      </div>
+      <div className="vb-services-grid">
+        {svcs.map(s => (
+          <div key={s.n} className="vb-svc-card">
+            <div className="vb-svc-num">{s.n}</div>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div className="vb-cta">
+        <h3>READY TO TALK<br/><span>ABOUT YOUR CAR?</span></h3>
+        <div className="vb-cta-right">
+          <div className="vb-cta-phone">
+            <span className="lbl">Call us now</span>
+            <a href="tel:01663746499">01663 746499</a>
+          </div>
+          <a href="#" className="vb-btn-y">Send a Message</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════
+   VARIANT C — Refined Gentleman's Club (warm cream, serif-led)
+════════════════════════════════════════════════════════════ */
+function VariantC() {
+  const svcs = [
+    { title:'Servicing & Maintenance', desc:'Routine oil changes to full mechanicals. The most accessible and affordable way to keep your classic in perfect health.' },
+    { title:'Full Restoration', desc:'Concours-quality restorations documented at every stage. Multiple award-winning results in our portfolio.' },
+    { title:'Bodywork & Paintwork', desc:'Factory-correct or bespoke finishes. Rust repair, panel fabrication and full resprays.' },
+    { title:'Engine & Drivetrain', desc:'Engine rebuilds, gearbox overhauls, carburettor and cooling work. Sympathetic to originals or upgraded for the road.' },
+    { title:'Race Preparation', desc:'FIA specification builds and race day support. Proven competitive results.' },
+    { title:'Bespoke & Specialist', desc:'One-off builds, insurance repairs, valuations and vehicle transportation. No project too unusual.' },
+  ];
+  return (
+    <div className="artboard-frame vc">
+      {/* Nav */}
+      <nav className="vc-nav">
+        <img src={LOGO} alt="Merlin Classic Cars" />
+        <div className="vc-nav-links">
+          {['Services','Gallery','Cars for Sale','About'].map(l => (
+            <a key={l} href="#">{l}</a>
+          ))}
+        </div>
+        <div className="vc-nav-right">
+          <span className="vc-phone">01663 746499</span>
+          <a href="#" className="vc-contact-btn">Contact</a>
+        </div>
+      </nav>
+      <div className="vc-rule" />
+
+      {/* Hero — serif editorial */}
+      <div className="vc-hero">
+        <div className="vc-hero-left">
+          <p className="vc-tag">Est. 1977 · Stockport, Cheshire</p>
+          <h1 className="vc-title">The Art of the<br/><em>Classic Car</em></h1>
+          <p className="vc-body">Merlin Classic Cars — a family of restorers, engineers and enthusiasts. Austin Healey specialists and trusted custodians of the finest British and European classics for over four decades.</p>
+          <div className="vc-btns">
+            <a href="#" className="vc-btn-navy">View Our Work</a>
+            <a href="#" className="vc-btn-link">Our Services →</a>
+          </div>
+        </div>
+        <div className="vc-hero-right">
+          <img src={PHOTO} alt="Austin Healey" />
+          <div className="vc-hero-right-badge">
+            <div className="num">45+</div>
+            <div className="lbl">Years of<br/>Expertise</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats strip */}
+      <div className="vc-strip">
+        {[['45+','Years in Business'],['200+','Restorations'],['12+','Concours Awards'],['18+','Marques']].map(([n,l]) => (
+          <div key={l} className="vc-strip-item">
+            <span className="vc-strip-num">{n}</span>
+            <span className="vc-strip-lbl">{l}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Services */}
+      <div className="vc-services">
+        <div className="vc-services-head">
+          <p className="label">What We Offer</p>
+          <h2>The Complete <em>Classic Car Service</em></h2>
+        </div>
+        <div className="vc-svc-row">
+          {svcs.map(s => (
+            <div key={s.title} className="vc-svc">
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+              <a href="#" className="vc-svc-link">Learn more →</a>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="vc-cta">
+        <div className="vc-cta-left">
+          <p className="label">Get in touch</p>
+          <h3>Ready to discuss<br/>your vehicle?</h3>
+        </div>
+        <div className="vc-cta-right">
+          <div className="vc-cta-phone">
+            <p className="lbl">Call us today</p>
+            <a href="tel:01663746499">01663 746499</a>
+          </div>
+          <a href="#" className="vc-btn-navy">Send a Message</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Canvas layout ── */
+function App() {
+  return (
+    <DCSection id="homepages" title="Homepage Directions — Choose Your Favourite">
+      <DCArtboard id="va" label="A · Heritage Editorial" width={1440} height={1270}>
+        <VariantA />
+      </DCArtboard>
+      <DCArtboard id="vb" label="B · Raw Motorsport" width={1440} height={1230}>
+        <VariantB />
+      </DCArtboard>
+      <DCArtboard id="vc" label="C · Refined &amp; Serif-led" width={1440} height={1210}>
+        <VariantC />
+      </DCArtboard>
+    </DCSection>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<div id="root"></div>
+</body>
+</html>

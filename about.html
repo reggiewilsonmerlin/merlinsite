@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Merlin Classic Cars</title>
+  <meta name="description" content="About Merlin Classic Cars — a family of restorers and enthusiasts since 1977. Austin Healey specialists based near Stockport, Cheshire.">
+  <link rel="stylesheet" href="merlin.css">
+  <style>
+    /* Story section */
+    .story-section {
+      padding: var(--section-py) 0;
+      background: var(--cream);
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .story-text .t-subhead { color: var(--gold-dim); margin-bottom: 0.75rem; }
+    .story-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .story-text p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #4a4a4a;
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .story-text p strong {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.5rem; bottom: 0;
+      width: 1.5px;
+      background: linear-gradient(to bottom, var(--gold), rgba(232,185,35,0.1));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+    .timeline-year {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .timeline-text {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #5a5a5a;
+      font-weight: 300;
+    }
+
+    /* Values / what sets us apart */
+    .values-section {
+      background: var(--navy);
+      padding: var(--section-py) 0;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(255,255,255,0.05);
+      margin-top: 3rem;
+    }
+    .value-card {
+      background: var(--navy-mid);
+      padding: 2.5rem;
+      transition: background 0.25s;
+    }
+    .value-card:hover { background: var(--navy-light); }
+    .value-num {
+      font-family: var(--ff-display);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(232,185,35,0.15);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .value-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+    .value-card p {
+      font-family: var(--ff-ui);
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--mist);
+    }
+
+    /* Concours / awards */
+    .awards-section {
+      background: var(--parchment);
+      padding: var(--section-py) 0;
+    }
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .award-card {
+      background: var(--white);
+      padding: 1.75rem;
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .award-card .event {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    .award-card .vehicle {
+      font-family: var(--ff-ui);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--mist);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .award-card .result {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      color: var(--gold-dim);
+      font-style: italic;
+    }
+
+    /* Testimonials */
+    .about-reviews {
+      background: var(--cream);
+      padding: var(--section-py) 0;
+    }
+    .reviews-masonry {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .review-card {
+      padding: 2rem 2.25rem;
+      border-left: 2px solid var(--gold);
+      background: var(--parchment);
+    }
+    .review-card blockquote {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      font-style: italic;
+      line-height: 1.75;
+      color: #3a3a3a;
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+    .review-card .stars {
+      color: var(--gold);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    .review-meta {
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .review-vehicle {
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      color: var(--mist);
+      margin-top: 0.2rem;
+    }
+
+    /* Team / workshop photo placeholder */
+    .workshop-section {
+      background: var(--navy);
+      padding: var(--section-py) 0;
+    }
+    .workshop-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .workshop-ph {
+      width: 100%;
+      aspect-ratio: 21/9;
+      background: var(--navy-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+      color: var(--mist);
+    }
+
+    /* Specialities breakdown */
+    .specialities-section {
+      background: var(--cream);
+      padding: var(--section-py) 0;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(0,0,0,0.06);
+      margin-top: 2.5rem;
+    }
+    .spec-block {
+      background: var(--cream);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+    .spec-block:hover { background: var(--parchment); }
+    .spec-block h3 {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .spec-block p {
+      font-family: var(--ff-ui);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: #666;
+    }
+    .spec-block .spec-icon {
+      width: 36px; height: 36px;
+      color: var(--gold-dim);
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .values-grid { grid-template-columns: 1fr; }
+      .reviews-masonry { grid-template-columns: 1fr; }
+      .spec-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .spec-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav scrolled" id="siteNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="sales.html">Cars for Sale</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:01663746499" class="nav-phone">01663 746499</a>
+      <button class="nav-burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="sales.html">Cars for Sale</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:01663746499" class="nav-phone-big">01663 746499</a>
+</div>
+
+<!-- Page Hero -->
+<div style="height:80px"></div>
+<section class="page-hero" style="height:420px;background:var(--navy)">
+  <img src="uploads/photos-1777807599577.jpeg" alt="" class="page-hero-bg" style="opacity:0.4">
+  <div class="page-hero-grad"></div>
+  <div class="container page-hero-content">
+    <p class="t-subhead">Est. 1977 · Stockport</p>
+    <h1>About Merlin<br>Classic Cars</h1>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <div class="container breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span>About</span>
+  </div>
+</div>
+
+<!-- Stats bar -->
+<div class="navy-bg" style="padding:0">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-num">1977</div><div class="stat-label">In the trade since</div></div>
+      <div class="stat-item"><div class="stat-num">1983</div><div class="stat-label">Business established</div></div>
+      <div class="stat-item"><div class="stat-num">200+</div><div class="stat-label">Vehicles restored</div></div>
+      <div class="stat-item"><div class="stat-num">18+</div><div class="stat-label">Marques worked on</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Story -->
+<section class="story-section">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-text fade-up">
+        <p class="t-subhead">Our Story</p>
+        <h2>A family passion <em style="font-style:italic;color:var(--gold-dim)">for over four decades</em></h2>
+        <p>Merlin Classic Cars is a small, dedicated family business based near Stockport, Cheshire. Our family has been involved in the classic and vintage vehicle trade since 1977 — long before we opened our doors commercially in 1983.</p>
+        <p>What began as a passion has grown into one of the most respected classic car restoration businesses in the North of England. We are particularly well known as <strong>Austin Healey restoration specialists</strong>, having worked on dozens of these beautiful cars over the years — from Frogeye Sprites to the mighty 3000 MkIII.</p>
+        <p>But our expertise extends far beyond any single marque. We have worked on virtually every significant British and European classic — from Rolls Royce Silver Shadows to Ford Escort Cosworths, from E-Type Jaguars to one-off prototypes. No vehicle is too rare or too unusual.</p>
+        <p>We are proud to have produced vehicles that have won <strong>multiple concours d'elegance awards</strong> — including at Goodwood — and our work appears in museums and private collections around the world.</p>
+        <p>Today, while we remain proud of our restoration heritage, we also place great emphasis on <strong>servicing and ongoing maintenance</strong> — helping owners keep their classics in perfect condition without necessarily committing to a full restoration.</p>
+      </div>
+
+      <div class="fade-up">
+        <div style="margin-bottom:1rem">
+          <img src="uploads/photos-1777807599577.jpeg" alt="Austin Healey restorations" style="width:100%;display:block">
+        </div>
+        <div class="timeline" style="margin-top:3rem">
+          <div class="timeline-item">
+            <div class="timeline-year">1977</div>
+            <p class="timeline-text">Our family begins working in the classic vehicle trade — restoration, coachbuilding and engineering.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1983</div>
+            <p class="timeline-text">Merlin Classic Cars formally established, based near Stockport, Cheshire.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1990s</div>
+            <p class="timeline-text">Reputation for Austin Healey work grows. Multiple concours awards. Austin Healey BN3 prototype restored — now in the Austin Healey Museum.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2000s</div>
+            <p class="timeline-text">Scope expands. Race preparation work begins. Goodwood Concours d'Elegance wins. Ford Anglia from TV's Heartbeat restored.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2010s</div>
+            <p class="timeline-text">One-off Delage D8S — one of only two surviving in the world — completed. Range of services broadened to include all aspects of classic car care.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">Today</div>
+            <p class="timeline-text">Over 200 restorations completed. Continuing to serve classic car owners with the same passion, care and attention to detail as always.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Workshop photo -->
+<section class="workshop-section">
+  <div class="container">
+    <div class="section-header center fade-up">
+      <span class="rule-gold center"></span>
+      <p class="t-subhead" style="color:var(--gold)">Our Workshop</p>
+      <h2 style="color:var(--cream)">Fully Equipped for Every Task</h2>
+      <p>Our workshop contains both the original tools used on these vehicles when they left the factory, alongside their modern counterparts — operated by skilled motor and bodywork engineers with decades of experience.</p>
+    </div>
+    <div class="workshop-img-wrap fade-up" style="margin-top:2.5rem">
+      <div class="workshop-ph">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="rgba(138,154,176,0.4)" stroke-width="1.2">
+          <rect x="8" y="16" width="48" height="36" rx="1"/>
+          <path d="M8 32h48M20 16v-4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v4"/>
+          <circle cx="22" cy="48" r="6"/><circle cx="42" cy="48" r="6"/>
+        </svg>
+        <span style="font-family:var(--ff-ui);font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist)">Workshop photography coming soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What sets us apart -->
+<section class="values-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="t-subhead" style="color:var(--gold)">Why Merlin</p>
+      <h2 style="color:var(--cream)">What Sets Us Apart</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card fade-up">
+        <div class="value-num">01</div>
+        <h3>Genuine Passion</h3>
+        <p>We are enthusiasts first and a business second. Every car that comes into our workshop is treated with the same care we'd give our own. We never cut corners.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-num">02</div>
+        <h3>Complete Photographic Record</h3>
+        <p>We photograph your vehicle throughout every stage of its restoration. This becomes part of the car's documented history — invaluable for provenance and insurance.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-num">03</div>
+        <h3>Honest & Transparent</h3>
+        <p>We provide detailed estimates, not vague quotes. We'll always tell you exactly what needs doing and why. No hidden extras, no surprises when you collect.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-num">04</div>
+        <h3>Award-Winning Results</h3>
+        <p>Multiple concours d'elegance wins at prestigious events including Goodwood. Our cars have competed and won at the highest levels of classic car competition.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-num">05</div>
+        <h3>Breadth of Expertise</h3>
+        <p>From a routine oil change to a complete frame-off restoration of a one-of-two-in-the-world Delage — our team has the skills to handle any challenge.</p>
+      </div>
+      <div class="value-card fade-up">
+        <div class="value-num">06</div>
+        <h3>Family Business Values</h3>
+        <p>Small enough to care deeply about every job; experienced enough to handle anything. You'll always deal with people who know your car personally.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Specialities -->
+<section class="specialities-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="t-subhead" style="color:var(--gold-dim)">Our Expertise</p>
+      <h2 style="color:var(--navy)">Marque Specialities</h2>
+      <p style="color:#5a5a5a">While we work on all makes, certain marques represent areas of particular depth and experience.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-block fade-up">
+        <svg class="spec-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="10" width="30" height="20" rx="1"/><circle cx="10" cy="30" r="4"/><circle cx="26" cy="30" r="4"/><path d="M3 20h30"/></svg>
+        <h3>Austin Healey</h3>
+        <p>Our primary speciality. We have restored dozens of Healeys — 100-4, 100-6, 3000 MkI/II/III, BN3, Frogeye and Sprite. Multiple concours wins. The BN3 prototype now in the Austin Healey Museum was our work.</p>
+      </div>
+      <div class="spec-block fade-up">
+        <svg class="spec-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="10" width="30" height="20" rx="1"/><circle cx="10" cy="30" r="4"/><circle cx="26" cy="30" r="4"/><path d="M3 20h30"/></svg>
+        <h3>Jaguar</h3>
+        <p>E-Type, XK and race variants. We have prepared the Jaguar Knobbly to race specification and carried out restoration work on E-Types to a very high standard.</p>
+      </div>
+      <div class="spec-block fade-up">
+        <svg class="spec-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="10" width="30" height="20" rx="1"/><circle cx="10" cy="30" r="4"/><circle cx="26" cy="30" r="4"/><path d="M3 20h30"/></svg>
+        <h3>MG</h3>
+        <p>MGB, MGB GT and the wider MG range. Our MGB GT race car build demonstrates the depth of our mechanical and fabrication capabilities.</p>
+      </div>
+      <div class="spec-block fade-up">
+        <svg class="spec-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="10" width="30" height="20" rx="1"/><circle cx="10" cy="30" r="4"/><circle cx="26" cy="30" r="4"/><path d="M3 20h30"/></svg>
+        <h3>Rolls Royce</h3>
+        <p>The pinnacle of classic British engineering. We approach Rolls Royce work with the reverence and precision these cars demand.</p>
+      </div>
+      <div class="spec-block fade-up">
+        <svg class="spec-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="10" width="30" height="20" rx="1"/><circle cx="10" cy="30" r="4"/><circle cx="26" cy="30" r="4"/><path d="M3 20h30"/></svg>
+        <h3>Ford Classics</h3>
+        <p>From the Ford Anglia Police Car from TV's Heartbeat to the Escort Cosworth race car — our Ford work spans a wide range of models and applications.</p>
+      </div>
+      <div class="spec-block fade-up">
+        <svg class="spec-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="10" width="30" height="20" rx="1"/><circle cx="10" cy="30" r="4"/><circle cx="26" cy="30" r="4"/><path d="M3 20h30"/></svg>
+        <h3>One-Off & Bespoke</h3>
+        <p>From the Delage D8S (one of two in existence) to the 1934 Morris Earl's Court Showcar, we relish the challenge of unique and extraordinary vehicles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section class="about-reviews" id="reviews">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="t-subhead" style="color:var(--gold-dim)">Testimonials</p>
+      <h2 style="color:var(--navy)">In Their Own Words</h2>
+    </div>
+    <div class="reviews-masonry">
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Chris and the team restored my Austin Healey 3000 to a standard that surpassed my highest expectations. The car won best in class at its first concours event after the restoration. The attention to detail throughout — and the photographic record they kept — is extraordinary."</blockquote>
+        <p class="review-meta">Austin Healey 3000 MkIII</p>
+        <p class="review-vehicle">Full concours restoration</p>
+      </div>
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I've brought my Frogeye Sprite to Merlin for servicing and maintenance for the last six years. They're honest, knowledgeable, and clearly passionate about these cars. They never try to sell you work you don't need, and the car has never run better."</blockquote>
+        <p class="review-meta">Austin Healey Frogeye Sprite</p>
+        <p class="review-vehicle">Ongoing servicing & maintenance</p>
+      </div>
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The E-Type came back from Merlin looking and running better than it ever did. From the initial estimate to final collection, the communication was exemplary. They clearly understand what these cars mean to their owners."</blockquote>
+        <p class="review-meta">Jaguar E-Type</p>
+        <p class="review-vehicle">Full restoration</p>
+      </div>
+      <div class="review-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"I was nervous entrusting anyone with the Rolls — it's been in the family for forty years. Merlin treated it with the reverence it deserved. The work was immaculate and the experience was completely stress-free."</blockquote>
+        <p class="review-meta">Rolls Royce Silver Shadow</p>
+        <p class="review-vehicle">Partial restoration & servicing</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Ready to discuss your vehicle?</h2>
+        <p>We're always happy to have a conversation — no obligation, no pressure.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="cta-phone">
+          <span class="lbl">Call us today</span>
+          <a href="tel:01663746499">01663 746499</a>
+        </div>
+        <a href="contact.html" class="btn btn-navy">Send a Message</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars"></div>
+        <p class="footer-desc">Established 1977. A family of restorers, engineers and enthusiasts based near Stockport, Cheshire.</p>
+        <p style="font-family:var(--ff-ui);font-size:0.8rem;color:var(--mist);margin-top:1.25rem">Unit 1C, The Ropery<br>Redmoor Lane, New Mills SK22 3JL</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html#maintenance">Servicing & Maintenance</a><a href="services.html#restoration">Full Restoration</a><a href="services.html">All Services</a></div>
+      <div class="footer-col"><h4>Gallery</h4><a href="gallery.html#austin-healey">Austin Healey</a><a href="gallery.html#jaguar">Jaguar</a><a href="gallery.html">Full Gallery</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:01663746499">01663 746499</a><a href="mailto:chris.merlinclassics@outlook.com">Send a Message</a><a href="contact.html">Contact Page</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Merlin Classic Cars. All rights reserved.</p>
+      <p>Austin Healey Specialists · Est. 1977 · Stockport, Cheshire</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+  fadeEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

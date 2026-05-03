@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Merlin Classic Cars</title>
+  <meta name="description" content="Browse our gallery of classic car restorations — Austin Healey, Jaguar, MG, Triumph, Rolls Royce and more. Merlin Classic Cars, Stockport.">
+  <link rel="stylesheet" href="merlin.css">
+  <style>
+    /* Filter bar */
+    .filter-bar {
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      position: sticky;
+      top: 80px;
+      z-index: 100;
+      padding: 0;
+    }
+    .filter-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+    .filter-inner::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      flex-shrink: 0;
+      font-family: var(--ff-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1.1rem 1.25rem;
+      border: none;
+      background: none;
+      color: var(--mist);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { color: var(--navy); }
+    .filter-btn.active {
+      color: var(--navy);
+      border-bottom-color: var(--gold);
+    }
+
+    /* Gallery sections */
+    .gallery-section {
+      padding: var(--section-py) 0;
+      scroll-margin-top: 140px;
+    }
+    .gallery-section:nth-child(odd) { background: var(--cream); }
+    .gallery-section:nth-child(even) { background: var(--parchment); }
+
+    .gallery-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+    .gallery-section-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .gallery-section-header .count {
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+
+    /* Masonry-style grid */
+    .photo-grid {
+      display: grid;
+      gap: 3px;
+    }
+    .photo-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .photo-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .photo-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--navy-mid);
+    }
+    .photo-item .ph {
+      width: 100%;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: var(--navy-mid);
+      color: var(--mist);
+    }
+    .photo-item.wide { grid-column: span 2; }
+    .photo-item.tall .ph { aspect-ratio: 3/4; }
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .photo-item:hover img { transform: scale(1.05); }
+
+    .photo-caption {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,42,0.9) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.25rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .photo-item:hover .photo-caption { opacity: 1; }
+    .photo-caption .tag {
+      font-family: var(--ff-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .photo-caption h3 {
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,18,28,0.96);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+    }
+    .lightbox-cap {
+      margin-top: 1rem;
+      font-family: var(--ff-ui);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mist);
+      text-align: center;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -3rem; right: 0;
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+    .lightbox-close:hover { color: var(--gold); }
+
+    /* Placeholder card helper */
+    .ph-icon {
+      width: 48px; height: 48px;
+      opacity: 0.3;
+    }
+    .ph-label {
+      font-family: var(--ff-ui);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      text-align: center;
+      max-width: 14ch;
+    }
+
+    /* CTA section */
+    .gallery-cta {
+      background: var(--navy);
+      padding: var(--section-py) 0;
+      text-align: center;
+    }
+    .gallery-cta h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+    .gallery-cta p {
+      font-family: var(--ff-body);
+      font-size: 1.1rem;
+      color: var(--mist);
+      max-width: 46ch;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    @media (max-width: 900px) {
+      .photo-grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .photo-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .photo-item.wide { grid-column: span 1; }
+    }
+    @media (max-width: 600px) {
+      .photo-grid-3,
+      .photo-grid-4 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav scrolled" id="siteNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <div class="nav-item">
+        <a href="gallery.html" class="active">Gallery ▾</a>
+        <div class="nav-dropdown">
+          <a href="#austin-healey">Austin Healey</a>
+          <a href="#sprite">Healey Sprite</a>
+          <a href="#jaguar">Jaguar</a>
+          <a href="#mg">MG</a>
+          <a href="#other">Other Marques</a>
+        </div>
+      </div>
+      <a href="sales.html">Cars for Sale</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:01663746499" class="nav-phone">01663 746499</a>
+      <button class="nav-burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="sales.html">Cars for Sale</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:01663746499" class="nav-phone-big">01663 746499</a>
+</div>
+
+<!-- Page Hero -->
+<div style="height:80px"></div>
+<section class="page-hero" style="height:360px;background:var(--navy)">
+  <img src="uploads/photos-1777807599577.jpeg" alt="" class="page-hero-bg">
+  <div class="page-hero-grad"></div>
+  <div class="container page-hero-content">
+    <p class="t-subhead">Over 200 Restorations</p>
+    <h1>Our Gallery</h1>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <div class="container breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span>Gallery</span>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all">All Work</button>
+    <button class="filter-btn" data-filter="austin-healey" onclick="location.href='#austin-healey'">Austin Healey</button>
+    <button class="filter-btn" data-filter="sprite" onclick="location.href='#sprite'">Healey Sprite</button>
+    <button class="filter-btn" data-filter="jaguar" onclick="location.href='#jaguar'">Jaguar</button>
+    <button class="filter-btn" data-filter="mg" onclick="location.href='#mg'">MG</button>
+    <button class="filter-btn" data-filter="ford" onclick="location.href='#other'">Ford</button>
+    <button class="filter-btn" data-filter="other" onclick="location.href='#other'">Other Marques</button>
+  </div>
+</div>
+
+<!-- ── Austin Healey ──────────────────────────────────────── -->
+<section class="gallery-section" id="austin-healey">
+  <div class="container">
+    <div class="gallery-section-header">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.4rem">Our Speciality</p>
+        <h2>Austin Healey</h2>
+      </div>
+      <span class="count">17 projects</span>
+    </div>
+
+    <!-- Featured photo first (real image) -->
+    <div class="photo-grid photo-grid-3" style="margin-bottom:3px">
+      <div class="photo-item wide" style="cursor:pointer" onclick="openLightbox(this)">
+        <img src="uploads/photos-1777807599577.jpeg" alt="Austin Healey Race Spec — BMC Competition">
+        <div class="photo-caption">
+          <div class="tag">Race Specification</div>
+          <h3>Austin Healey 100 — BMC Competition Department</h3>
+        </div>
+      </div>
+      <div class="photo-item">
+        <div class="ph">
+          <svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg>
+          <span class="ph-label">Austin Healey 100-4 Concours Winner</span>
+        </div>
+        <div class="photo-caption" style="opacity:0.85">
+          <div class="tag">Concours Winner</div>
+          <h3>Austin Healey 100-4</h3>
+        </div>
+      </div>
+    </div>
+    <div class="photo-grid photo-grid-4">
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">100-6 New Build</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">New Build</div><h3>Austin Healey 100-6</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">100-6 Primrose / White</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Factory Colour</div><h3>100-6 Primrose over White</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">100-6 Rotisserie</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Rotisserie Restoration</div><h3>Austin Healey 100-6</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">BJ7 Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Restoration</div><h3>Austin Healey BJ7</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">MkIII Colorado Red</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Concours</div><h3>MkIII Colorado Red</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">MkIII Healey Blue</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Concours Winner</div><h3>MkIII Healey Blue</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">MkIII Factory Gold</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Factory Gold</div><h3>MkIII Factory Gold</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">FIA Rally Car</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Rally Spec</div><h3>FIA Rally Car</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Healey Sprite ───────────────────────────────────────── -->
+<section class="gallery-section" id="sprite">
+  <div class="container">
+    <div class="gallery-section-header">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.4rem">The Little Legend</p>
+        <h2>Austin Healey Sprite</h2>
+      </div>
+      <span class="count">8 projects</span>
+    </div>
+    <div class="photo-grid photo-grid-4">
+      <div class="photo-item wide"><div class="ph" style="aspect-ratio:2/1"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Frogeye Bare Metal</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Bare Metal Paintwork</div><h3>Austin Healey Frogeye Sprite</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Concours Winner</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Concours Winner</div><h3>Healey Sprite</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Fast Road Spec</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Fast Road</div><h3>Healey Sprite</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Frogeye OE White</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Original White</div><h3>Frogeye Sprite</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Willy's Jeep Engine</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Bespoke Build</div><h3>Frogeye — Willy's Jeep Engine</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Jaguar ─────────────────────────────────────────────── -->
+<section class="gallery-section" id="jaguar">
+  <div class="container">
+    <div class="gallery-section-header">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.4rem">British Icons</p>
+        <h2>Jaguar</h2>
+      </div>
+      <span class="count">Select projects</span>
+    </div>
+    <div class="photo-grid photo-grid-3">
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Jaguar E-Type Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Restoration</div><h3>Jaguar E-Type</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Jaguar Knobbly Race Car</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Race Specification</div><h3>Jaguar Knobbly</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Jaguar Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Restoration</div><h3>Jaguar Classic</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MG ─────────────────────────────────────────────────── -->
+<section class="gallery-section" id="mg">
+  <div class="container">
+    <div class="gallery-section-header">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.4rem">MG Expertise</p>
+        <h2>MG</h2>
+      </div>
+      <span class="count">Select projects</span>
+    </div>
+    <div class="photo-grid photo-grid-4">
+      <div class="photo-item wide"><div class="ph" style="aspect-ratio:2/1"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">MGB GT Race Car</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Race Specification</div><h3>MGB GT Race Car</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">MG Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Restoration</div><h3>Classic MG</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">MG Servicing</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Servicing</div><h3>MG Classic</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Other Marques ──────────────────────────────────────── -->
+<section class="gallery-section" id="other">
+  <div class="container">
+    <div class="gallery-section-header">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.4rem">From Anglia to Rolls Royce</p>
+        <h2>Other Marques</h2>
+      </div>
+      <span class="count">Many projects</span>
+    </div>
+    <div class="photo-grid photo-grid-4">
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Ford Anglia — Heartbeat</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Ford · TV Car</div><h3>Ford Anglia Police Car</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Ford Escort Cosworth Race</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Ford · Race Car</div><h3>Ford Escort Cosworth</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Austin Seven Race Car</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Austin · Race Car</div><h3>Austin Seven</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Rolls Royce Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Rolls Royce</div><h3>Rolls Royce Classic</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Morris Showcar 1934</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Morris · One-Off Build</div><h3>Earl's Court Showcar 1934</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Triumph Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Triumph</div><h3>Triumph Classic</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Mini Restoration</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Mini</div><h3>Classic Mini</h3></div></div>
+      <div class="photo-item"><div class="ph"><svg class="ph-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="14" width="36" height="24" rx="1"/><circle cx="16" cy="38" r="4"/><circle cx="32" cy="38" r="4"/><path d="M6 26h36"/></svg><span class="ph-label">Sunbeam</span></div><div class="photo-caption" style="opacity:0.85"><div class="tag">Sunbeam</div><h3>Sunbeam Classic</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery CTA -->
+<section class="gallery-cta">
+  <div class="container">
+    <span class="rule-gold center"></span>
+    <h2>Interested in a restoration?</h2>
+    <p>Every car in our gallery started as a project someone brought to us. Get in touch and let's talk about what we can do for yours.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="tel:01663746499" class="btn btn-gold">Call 01663 746499</a>
+      <a href="contact.html" class="btn btn-outline">Send a Message</a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <p class="lightbox-cap" id="lightboxCap"></p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars"></div>
+        <p class="footer-desc">Established 1977. A family of restorers, engineers and enthusiasts based near Stockport, Cheshire.</p>
+        <p style="font-family:var(--ff-ui);font-size:0.8rem;color:var(--mist);margin-top:1.25rem">Unit 1C, The Ropery<br>Redmoor Lane, New Mills SK22 3JL</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html#maintenance">Servicing & Maintenance</a><a href="services.html#restoration">Full Restoration</a><a href="services.html#bodywork">Bodywork & Paintwork</a><a href="services.html">All Services</a></div>
+      <div class="footer-col"><h4>Gallery</h4><a href="#austin-healey">Austin Healey</a><a href="#sprite">Healey Sprite</a><a href="#jaguar">Jaguar</a><a href="#mg">MG</a><a href="#other">Other Marques</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:01663746499">01663 746499</a><a href="mailto:chris.merlinclassics@outlook.com">Send a Message</a><a href="sales.html">Cars for Sale</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Merlin Classic Cars. All rights reserved.</p>
+      <p>Austin Healey Specialists · Est. 1977 · Stockport, Cheshire</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+
+  // Filter button active state
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // Lightbox
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    const cap = el.querySelector('h3');
+    if (!img) return;
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightboxCap').textContent = cap ? cap.textContent : '';
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Make all photo items with real images clickable
+  document.querySelectorAll('.photo-item').forEach(item => {
+    item.addEventListener('click', () => openLightbox(item));
+  });
+</script>
+</body>
+</html>

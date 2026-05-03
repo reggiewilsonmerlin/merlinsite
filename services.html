@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Merlin Classic Cars</title>
+  <meta name="description" content="Classic car servicing, maintenance, restoration, bodywork, engine rebuilds and race preparation. Merlin Classic Cars, Stockport.">
+  <link rel="stylesheet" href="merlin.css">
+  <style>
+    .service-section {
+      padding: var(--section-py) 0;
+      scroll-margin-top: 90px;
+    }
+    .service-section:nth-child(even) { background: var(--parchment); }
+    .service-section:nth-child(odd)  { background: var(--cream); }
+
+    .service-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .service-layout.reverse { direction: rtl; }
+    .service-layout.reverse > * { direction: ltr; }
+
+    .service-detail-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .service-detail-img img,
+    .service-detail-img .ph {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: flex;
+    }
+    .service-detail-img .ph {
+      background: var(--navy-mid);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .service-detail-img::after {
+      content: '';
+      position: absolute;
+      bottom: -2rem; right: -2rem;
+      width: 120px; height: 120px;
+      border: 2px solid var(--gold);
+      z-index: -1;
+    }
+
+    .service-detail-text .t-subhead { color: var(--gold-dim); margin-bottom: 0.5rem; }
+    .service-detail-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    .service-detail-text p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #4a4a4a;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .service-list {
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .service-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: var(--ff-ui);
+      font-size: 0.875rem;
+      color: #3a3a3a;
+    }
+    .service-list-item::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      background: var(--gold);
+      margin-top: 0.45rem;
+    }
+
+    /* Highlighted maintenance section */
+    .maintenance-highlight {
+      background: var(--navy);
+      color: var(--cream);
+      padding: var(--section-py) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .maintenance-highlight::before {
+      content: 'SERVICE';
+      position: absolute;
+      top: -0.5rem; right: -1rem;
+      font-family: var(--ff-display);
+      font-size: 12rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .maintenance-highlight .service-detail-text h2 { color: var(--cream); }
+    .maintenance-highlight .service-detail-text .t-subhead { color: var(--gold); }
+    .maintenance-highlight .service-detail-text p { color: var(--mist); }
+    .maintenance-highlight .service-list-item { color: rgba(255,255,255,0.8); }
+
+    /* Pricing guide */
+    .pricing-guide {
+      background: var(--parchment);
+      padding: var(--section-py) 0;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .pricing-note {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .pricing-note h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .pricing-note p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #5a5a5a;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Additional services list */
+    .additional-services {
+      background: var(--cream);
+      padding: var(--section-py) 0;
+    }
+    .add-services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(0,0,0,0.06);
+      margin-top: 2.5rem;
+    }
+    .add-service-item {
+      background: var(--cream);
+      padding: 1.5rem 1.75rem;
+      font-family: var(--ff-ui);
+      font-size: 0.875rem;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: background 0.2s;
+    }
+    .add-service-item:hover { background: var(--parchment); }
+    .add-service-item::before {
+      content: '';
+      display: block;
+      width: 5px; height: 5px;
+      min-width: 5px;
+      background: var(--gold);
+    }
+
+    @media (max-width: 900px) {
+      .service-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .service-layout.reverse { direction: ltr; }
+      .add-services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .add-services-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav scrolled" id="siteNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-item">
+        <a href="services.html" class="active">Services ▾</a>
+        <div class="nav-dropdown">
+          <a href="#maintenance">Servicing & Maintenance</a>
+          <a href="#restoration">Full Restoration</a>
+          <a href="#bodywork">Bodywork & Paintwork</a>
+          <a href="#engine">Engine & Drivetrain</a>
+          <a href="#race">Race Preparation</a>
+        </div>
+      </div>
+      <a href="gallery.html">Gallery</a>
+      <a href="sales.html">Cars for Sale</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:01663746499" class="nav-phone">01663 746499</a>
+      <button class="nav-burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="sales.html">Cars for Sale</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:01663746499" class="nav-phone-big">01663 746499</a>
+</div>
+
+<!-- Page Hero -->
+<div style="height:80px"></div>
+<section class="page-hero" style="height:360px;background:var(--navy)">
+  <img src="uploads/photos-1777807599577.jpeg" alt="" class="page-hero-bg">
+  <div class="page-hero-grad"></div>
+  <div class="container page-hero-content">
+    <p class="t-subhead">What We Offer</p>
+    <h1>Our Services</h1>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <div class="container breadcrumb-inner">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span>Services</span>
+  </div>
+</div>
+
+<!-- ── MAINTENANCE (featured first — addressing economic shift) -->
+<section class="maintenance-highlight" id="maintenance">
+  <div class="container">
+    <div class="service-layout">
+      <div class="service-detail-img">
+        <div class="ph">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="rgba(232,185,35,0.4)" stroke-width="1.2">
+            <circle cx="32" cy="32" r="24"/>
+            <path d="M32 14v18l9 5"/>
+            <circle cx="32" cy="32" r="4" fill="rgba(232,185,35,0.4)" stroke="none"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:var(--mist);text-transform:uppercase">Workshop Photo</span>
+        </div>
+      </div>
+      <div class="service-detail-text">
+        <p class="t-subhead">Most Popular Service</p>
+        <h2>Servicing & Ongoing Maintenance</h2>
+        <p>Keeping your classic in perfect running order doesn't have to mean a full restoration. Regular, expert servicing is the single most important thing you can do for a classic or vintage vehicle — and it's far more affordable than you might think.</p>
+        <p>Our workshop team has decades of hands-on experience with the quirks and demands of classic vehicles — from Healey carburettors to Jaguar cooling systems. We treat every car as if it were our own.</p>
+        <div class="service-list">
+          <div class="service-list-item">Routine servicing & oil changes</div>
+          <div class="service-list-item">MOT preparation & testing</div>
+          <div class="service-list-item">Brake inspection, adjustment & overhaul</div>
+          <div class="service-list-item">Carburettor cleaning, balancing & tuning</div>
+          <div class="service-list-item">Cooling system service & repair</div>
+          <div class="service-list-item">Electrical diagnosis & repair</div>
+          <div class="service-list-item">Suspension, steering & wheel alignment</div>
+          <div class="service-list-item">Fuel system maintenance</div>
+          <div class="service-list-item">Seasonal preparation & storage checks</div>
+        </div>
+        <a href="contact.html" class="btn btn-gold">Discuss Your Vehicle</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FULL RESTORATION -->
+<section class="service-section" id="restoration">
+  <div class="container">
+    <div class="service-layout reverse">
+      <div class="service-detail-img">
+        <div class="ph" style="background:var(--parchment)">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="rgba(13,27,42,0.25)" stroke-width="1.2">
+            <rect x="8" y="20" width="48" height="30" rx="1"/>
+            <path d="M20 20v-4a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v4"/>
+            <path d="M8 32h48"/>
+            <circle cx="20" cy="50" r="5"/><circle cx="44" cy="50" r="5"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:#aaa;text-transform:uppercase">Restoration Photo</span>
+        </div>
+      </div>
+      <div class="service-detail-text">
+        <p class="t-subhead">Full Restoration</p>
+        <h2>From Strip-Down to Concours Finish</h2>
+        <p>A complete restoration is the ultimate investment in a classic car. Our team has completed hundreds of full restorations — from bare-metal resprays to total ground-up rebuilds — each documented with a full photographic record that becomes part of your vehicle's history file.</p>
+        <p>We are multiple concours d'elegance award winners, and approach every restoration with the same obsessive attention to detail — whether it's destined for shows or the open road.</p>
+        <div class="service-list">
+          <div class="service-list-item">Full bare-metal strip and inspection</div>
+          <div class="service-list-item">Chassis repair, restoration & fabrication</div>
+          <div class="service-list-item">Complete body rebuild to original specification</div>
+          <div class="service-list-item">Factory-correct paint finishes</div>
+          <div class="service-list-item">Full mechanical rebuild</div>
+          <div class="service-list-item">Interior trimming & upholstery</div>
+          <div class="service-list-item">Full photographic documentation throughout</div>
+        </div>
+        <a href="contact.html" class="btn btn-navy">Discuss a Restoration</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BODYWORK -->
+<section class="service-section" id="bodywork" style="background:var(--navy)!important;color:var(--cream)">
+  <div class="container">
+    <div class="service-layout">
+      <div class="service-detail-img">
+        <div class="ph" style="background:var(--navy-mid)">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="rgba(232,185,35,0.4)" stroke-width="1.2">
+            <path d="M8 44 C16 28 24 20 32 20 C40 20 48 28 56 44"/>
+            <path d="M8 44 Q20 38 32 38 Q44 38 56 44"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:var(--mist);text-transform:uppercase">Bodywork Photo</span>
+        </div>
+      </div>
+      <div class="service-detail-text">
+        <p class="t-subhead" style="color:var(--gold)">Bodywork & Paintwork</p>
+        <h2 style="color:var(--cream)">Expert Panel Work & Finishing</h2>
+        <p style="color:var(--mist)">Our bodywork and paintwork capability is one of our greatest strengths. From minor dents and rust repairs to complete bodyshell fabrication, we have the skills and equipment to handle any challenge.</p>
+        <p style="color:var(--mist)">We have produced everything from factory-correct period colours to bespoke custom finishes, including bare-metal work and House of Kolor chameleon paint. Every panel that leaves our workshop meets our exacting standards.</p>
+        <div class="service-list">
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Bodyshell restoration & fabrication</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Rust treatment & panel replacement</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Rotisserie restoration</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Factory-correct colour matching</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Custom & bespoke paint finishes</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Bare-metal preparation & paintwork</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Insurance repair work</div>
+        </div>
+        <a href="contact.html" class="btn btn-gold">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ENGINE -->
+<section class="service-section" id="engine">
+  <div class="container">
+    <div class="service-layout reverse">
+      <div class="service-detail-img">
+        <div class="ph" style="background:var(--parchment)">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="rgba(13,27,42,0.25)" stroke-width="1.2">
+            <circle cx="32" cy="32" r="12"/>
+            <path d="M32 8v8M32 48v8M8 32h8M48 32h8"/>
+            <path d="M15.5 15.5l5.6 5.6M42.9 42.9l5.6 5.6M15.5 48.5l5.6-5.6M42.9 21.1l5.6-5.6"/>
+            <circle cx="32" cy="32" r="4" fill="rgba(13,27,42,0.15)" stroke="none"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:#aaa;text-transform:uppercase">Engine Photo</span>
+        </div>
+      </div>
+      <div class="service-detail-text">
+        <p class="t-subhead">Mechanical Engineering</p>
+        <h2>Engine, Gearbox & Drivetrain</h2>
+        <p>The heart of your classic deserves expert attention. Our engineering team has hands-on experience rebuilding the engines, gearboxes and drivetrain components of a wide range of British and European classics — sympathetically to original spec, or upgraded for modern use.</p>
+        <div class="service-list">
+          <div class="service-list-item">Full engine strip, inspection & rebuild</div>
+          <div class="service-list-item">Gearbox & differential overhaul</div>
+          <div class="service-list-item">Clutch replacement & adjustment</div>
+          <div class="service-list-item">Carburettor rebuild & tuning</div>
+          <div class="service-list-item">Cooling system repair & upgrade</div>
+          <div class="service-list-item">Brake system overhaul</div>
+          <div class="service-list-item">Suspension & steering rebuild</div>
+          <div class="service-list-item">Performance upgrades (sympathetic to originals)</div>
+        </div>
+        <a href="contact.html" class="btn btn-navy">Discuss Your Engine</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RACE PREP -->
+<section class="service-section" id="race" style="background:var(--navy)!important">
+  <div class="container">
+    <div class="service-layout">
+      <div class="service-detail-img">
+        <div class="ph" style="background:var(--navy-mid)">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="rgba(232,185,35,0.4)" stroke-width="1.2">
+            <path d="M12 48L8 40l8-20 8 6"/>
+            <path d="M52 48l4-8-8-20-8 6"/>
+            <ellipse cx="32" cy="28" rx="12" ry="8"/>
+            <path d="M20 32c0 8.8 5.4 16 12 16s12-7.2 12-16"/>
+          </svg>
+          <span style="font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;color:var(--mist);text-transform:uppercase">Race Car Photo</span>
+        </div>
+      </div>
+      <div class="service-detail-text">
+        <p class="t-subhead" style="color:var(--gold)">Motorsport</p>
+        <h2 style="color:var(--cream)">Race Preparation & Support</h2>
+        <p style="color:var(--mist)">We have been preparing competitive race cars for years, with proven results on track. Our race-prepared vehicles include Austin Healey, Austin Seven, MGB GT and FIA-spec rally cars.</p>
+        <p style="color:var(--mist)">Whether you need a car prepared for historic racing, track days, or FIA specification rally events, our team brings the same dedication and precision we apply to concours restorations.</p>
+        <div class="service-list">
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Full race preparation builds</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">FIA specification compliance</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Race day support & attendance</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Safety equipment fitment</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Performance tuning & setup</div>
+          <div class="service-list-item" style="color:rgba(255,255,255,0.8)">Post-race inspection & repair</div>
+        </div>
+        <a href="contact.html" class="btn btn-gold">Enquire About Race Prep</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Additional Services -->
+<section class="additional-services">
+  <div class="container">
+    <div class="section-header fade-up">
+      <p class="t-subhead" style="color:var(--gold-dim)">Also Available</p>
+      <h2 style="color:var(--navy)">Further Services</h2>
+      <p style="color:#5a5a5a">If you don't see what you need listed, please call or send a message — we're always happy to discuss what's possible.</p>
+    </div>
+    <div class="add-services-grid">
+      <div class="add-service-item">Interior trimming & upholstery</div>
+      <div class="add-service-item">Vehicle transportation</div>
+      <div class="add-service-item">Insurance repairs & assessments</div>
+      <div class="add-service-item">Vehicle valuations</div>
+      <div class="add-service-item">Bespoke panel & component fabrication</div>
+      <div class="add-service-item">Coach building</div>
+      <div class="add-service-item">Toy hauler builds</div>
+      <div class="add-service-item">Body styling & custom kits</div>
+      <div class="add-service-item">Electrical system repairs</div>
+      <div class="add-service-item">Chassis restoration</div>
+      <div class="add-service-item">Vintage vehicle restoration</div>
+      <div class="add-service-item">One-off & bespoke builds</div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing note -->
+<section class="pricing-guide">
+  <div class="container">
+    <div class="pricing-note fade-up">
+      <span class="rule-gold center"></span>
+      <h2>Transparent Estimates</h2>
+      <p>We never use the word "quote" — we provide honest, detailed estimates based on a proper assessment of your vehicle. We'll always explain exactly what needs doing and why, with no hidden surprises.</p>
+      <p>Call us for a friendly conversation, or bring your car in for an inspection. We're happy to advise even if you're not sure what work is needed.</p>
+      <a href="contact.html" class="btn btn-gold">Get an Estimate</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Talk to our team today</h2>
+        <p>Expert advice costs nothing. Give us a call and let's discuss your vehicle.</p>
+      </div>
+      <div class="cta-actions">
+        <div class="cta-phone">
+          <span class="lbl">Call us now</span>
+          <a href="tel:01663746499">01663 746499</a>
+        </div>
+        <a href="contact.html" class="btn btn-navy">Send a Message</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars"></div>
+        <p class="footer-desc">Established 1977. A family of restorers, engineers and enthusiasts based near Stockport, Cheshire.</p>
+        <p style="font-family:var(--ff-ui);font-size:0.8rem;color:var(--mist);margin-top:1.25rem">Unit 1C, The Ropery<br>Redmoor Lane, New Mills SK22 3JL</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#maintenance">Servicing & Maintenance</a>
+        <a href="#restoration">Full Restoration</a>
+        <a href="#bodywork">Bodywork & Paintwork</a>
+        <a href="#engine">Engine & Drivetrain</a>
+        <a href="#race">Race Preparation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Gallery</h4>
+        <a href="gallery.html#austin-healey">Austin Healey</a>
+        <a href="gallery.html#jaguar">Jaguar</a>
+        <a href="gallery.html#mg">MG</a>
+        <a href="gallery.html">Full Gallery</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:01663746499">01663 746499</a>
+        <a href="mailto:chris.merlinclassics@outlook.com">Send a Message</a>
+        <a href="sales.html">Cars for Sale</a>
+        <a href="contact.html">Contact Page</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Merlin Classic Cars. All rights reserved.</p>
+      <p>Austin Healey Specialists · Est. 1977 · Stockport, Cheshire</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.12});
+  fadeEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

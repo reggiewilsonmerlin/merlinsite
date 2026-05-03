@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Merlin Classic Cars</title>
+  <meta name="description" content="Contact Merlin Classic Cars. Call 01663 746499 or send a message. Unit 1C, The Ropery, New Mills SK22 3JL.">
+  <link rel="stylesheet" href="merlin.css">
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 0;
+      min-height: 70vh;
+    }
+
+    /* Left panel — info */
+    .contact-info {
+      background: var(--navy);
+      padding: clamp(3rem, 6vw, 5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-info::before {
+      content: 'MCC';
+      position: absolute;
+      bottom: -2rem; right: -1rem;
+      font-family: var(--ff-display);
+      font-size: 14rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .contact-info .t-subhead { color: var(--gold); margin-bottom: 0.75rem; }
+    .contact-info h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      margin-bottom: 2rem;
+    }
+    .contact-detail-label {
+      font-family: var(--ff-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .contact-detail-value {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--cream);
+    }
+    .contact-detail-value a {
+      color: var(--cream);
+      transition: color 0.2s;
+    }
+    .contact-detail-value a:hover { color: var(--gold); }
+    .contact-detail-sub {
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      color: var(--mist);
+      margin-top: 0.2rem;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .contact-divider {
+      width: 48px;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin: 2rem 0;
+    }
+
+    .contact-hours {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .contact-hour-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--ff-ui);
+      font-size: 0.85rem;
+    }
+    .contact-hour-row .day { color: var(--mist); }
+    .contact-hour-row .time { color: rgba(255,255,255,0.8); font-weight: 500; }
+
+    /* Right panel — form */
+    .contact-form-panel {
+      background: var(--cream);
+      padding: clamp(3rem, 6vw, 5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-form-panel .t-subhead { color: var(--gold-dim); margin-bottom: 0.5rem; }
+    .contact-form-panel h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+    .contact-form-panel .form-intro {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      color: #5a5a5a;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    /* Form elements */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group.full { grid-column: span 2; }
+    .form-label {
+      font-family: var(--ff-ui);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .form-label .req { color: var(--gold-dim); }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--white);
+      border: 1.5px solid rgba(0,0,0,0.15);
+      padding: 0.75rem 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      appearance: none;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(13,27,42,0.06);
+    }
+    .form-textarea { min-height: 140px; resize: vertical; line-height: 1.6; }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .form-note {
+      font-family: var(--ff-ui);
+      font-size: 0.75rem;
+      color: var(--mist);
+      line-height: 1.5;
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .form-success.show { display: block; }
+    .form-success h3 {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 1rem 0 0.5rem;
+    }
+    .form-success p {
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      color: #5a5a5a;
+    }
+    .success-tick {
+      width: 64px; height: 64px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      font-size: 1.75rem;
+    }
+
+    /* Map area */
+    .map-section {
+      background: var(--parchment);
+      padding: var(--section-py) 0;
+    }
+    .map-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .map-info h3 {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .map-info p {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      color: #5a5a5a;
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    .map-address {
+      font-family: var(--ff-ui);
+      font-size: 0.875rem;
+      color: var(--navy);
+      line-height: 1.8;
+      font-weight: 500;
+      padding: 1.25rem 1.5rem;
+      background: var(--white);
+      border-left: 2px solid var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .map-embed {
+      background: var(--navy-mid);
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .map-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .map-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--mist);
+      font-family: var(--ff-ui);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .map-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav scrolled" id="siteNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="sales.html">Cars for Sale</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:01663746499" class="nav-phone">01663 746499</a>
+      <button class="nav-burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="sales.html">Cars for Sale</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:01663746499" class="nav-phone-big">01663 746499</a>
+</div>
+
+<div style="height:80px"></div>
+
+<!-- Main contact block -->
+<div class="contact-layout">
+
+  <!-- Info panel -->
+  <div class="contact-info">
+    <p class="t-subhead">Get in Touch</p>
+    <h2>We'd love to hear about your vehicle</h2>
+
+    <div class="contact-detail">
+      <p class="contact-detail-label">Telephone</p>
+      <p class="contact-detail-value"><a href="tel:01663746499">01663 746499</a></p>
+      <p class="contact-detail-sub">The best way to reach us. We're happy to talk through any enquiry.</p>
+    </div>
+
+    <div class="contact-detail">
+      <p class="contact-detail-label">Email</p>
+      <p class="contact-detail-value"><a href="mailto:chris.merlinclassics@outlook.com">chris.merlinclassics@outlook.com</a></p>
+      <p class="contact-detail-sub">We aim to reply within one working day.</p>
+    </div>
+
+    <div class="contact-divider"></div>
+
+    <div class="contact-detail">
+      <p class="contact-detail-label">Workshop Address</p>
+      <p class="contact-detail-value">Unit 1C, The Ropery</p>
+      <p class="contact-detail-sub">Redmoor Lane, New Mills<br>Stockport, SK22 3JL</p>
+    </div>
+
+    <div class="contact-divider"></div>
+
+    <div class="contact-detail">
+      <p class="contact-detail-label">Opening Hours</p>
+      <div class="contact-hours">
+        <div class="contact-hour-row">
+          <span class="day">Monday – Friday</span>
+          <span class="time">8:00am – 5:30pm</span>
+        </div>
+        <div class="contact-hour-row">
+          <span class="day">Saturday</span>
+          <span class="time">By appointment</span>
+        </div>
+        <div class="contact-hour-row">
+          <span class="day">Sunday</span>
+          <span class="time">Closed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form panel -->
+  <div class="contact-form-panel">
+    <div id="formWrap">
+      <p class="t-subhead">Send a Message</p>
+      <h2>Tell us about your project</h2>
+      <p class="form-intro">Whether you're after a service, an estimate, a restoration or have a car for sale — fill in the form below and we'll be in touch shortly. No obligation, no pressure.</p>
+
+      <form id="contactForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="fname">First Name <span class="req">*</span></label>
+            <input class="form-input" type="text" id="fname" name="fname" required placeholder="Chris">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="lname">Last Name <span class="req">*</span></label>
+            <input class="form-input" type="text" id="lname" name="lname" required placeholder="Smith">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address <span class="req">*</span></label>
+            <input class="form-input" type="email" id="email" name="email" required placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone Number</label>
+            <input class="form-input" type="tel" id="phone" name="phone" placeholder="07700 000000">
+          </div>
+          <div class="form-group full">
+            <label class="form-label" for="vehicle">Vehicle (Make, Model, Year)</label>
+            <input class="form-input" type="text" id="vehicle" name="vehicle" placeholder="e.g. Austin Healey 3000 MkIII, 1965">
+          </div>
+          <div class="form-group full">
+            <label class="form-label" for="service">Type of Enquiry</label>
+            <select class="form-select" id="service" name="service">
+              <option value="">— Please select —</option>
+              <option value="servicing">Servicing &amp; Maintenance</option>
+              <option value="restoration">Full Restoration</option>
+              <option value="bodywork">Bodywork &amp; Paintwork</option>
+              <option value="engine">Engine &amp; Drivetrain</option>
+              <option value="race">Race Preparation</option>
+              <option value="sales">Cars for Sale Enquiry</option>
+              <option value="valuation">Valuation</option>
+              <option value="other">Other / General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label" for="message">Message <span class="req">*</span></label>
+            <textarea class="form-textarea" id="message" name="message" required placeholder="Tell us about your vehicle and what you're looking for…"></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit-row">
+          <button type="submit" class="btn btn-gold">Send Message</button>
+          <p class="form-note">We'll respond within one working day.<br>Prefer to call? <a href="tel:01663746499" style="color:var(--navy);font-weight:600">01663 746499</a></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success state -->
+    <div class="form-success" id="formSuccess">
+      <div class="success-tick">✓</div>
+      <h3>Message Sent</h3>
+      <p>Thank you — we'll be in touch within one working day.<br>Prefer not to wait? Call us on <a href="tel:01663746499" style="color:var(--navy);font-weight:600">01663 746499</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Map section -->
+<section class="map-section">
+  <div class="container">
+    <div class="map-grid">
+      <div>
+        <p class="t-subhead" style="color:var(--gold-dim);margin-bottom:0.5rem">Find Us</p>
+        <h3>Our Workshop</h3>
+        <p>We're based at The Ropery in New Mills, just off the A6015 — easy to find and with plenty of space to bring your vehicle. Please call ahead if you're planning to visit for the first time.</p>
+        <div class="map-address">
+          Unit 1C, The Ropery<br>
+          Redmoor Lane<br>
+          New Mills<br>
+          Stockport SK22 3JL
+        </div>
+        <a href="https://maps.google.com/?q=Unit+1C+The+Ropery+Redmoor+Lane+New+Mills+SK22+3JL" target="_blank" rel="noopener" class="btn btn-navy">Open in Google Maps</a>
+      </div>
+      <div class="map-embed">
+        <!-- Google Maps embed — replace src with your embed URL from maps.google.com > Share > Embed a map -->
+        <div class="map-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(138,154,176,0.6)" stroke-width="1.2">
+            <path d="M24 4C17 4 11 10 11 17c0 10 13 27 13 27s13-17 13-27c0-7-6-13-13-13z"/>
+            <circle cx="24" cy="17" r="5"/>
+          </svg>
+          <span>Google Map — add embed code here</span>
+          <a href="https://maps.google.com/?q=New+Mills+SK22+3JL" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--ff-ui);font-size:0.75rem;letter-spacing:0.1em;text-decoration:underline">Open Google Maps ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars"></div>
+        <p class="footer-desc">Established 1977. A family of restorers, engineers and enthusiasts based near Stockport, Cheshire.</p>
+        <p style="font-family:var(--ff-ui);font-size:0.8rem;color:var(--mist);margin-top:1.25rem">Unit 1C, The Ropery<br>Redmoor Lane, New Mills SK22 3JL</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html#maintenance">Servicing & Maintenance</a><a href="services.html#restoration">Full Restoration</a><a href="services.html">All Services</a></div>
+      <div class="footer-col"><h4>Gallery</h4><a href="gallery.html#austin-healey">Austin Healey</a><a href="gallery.html#jaguar">Jaguar</a><a href="gallery.html">Full Gallery</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:01663746499">01663 746499</a><a href="mailto:chris.merlinclassics@outlook.com">Send an Email</a><a href="sales.html">Cars for Sale</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Merlin Classic Cars. All rights reserved.</p>
+      <p>Austin Healey Specialists · Est. 1977 · Stockport, Cheshire</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open'));
+
+  // Form submission (demo — replace with your backend/Formspree/etc.)
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const required = this.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(field => {
+      if (!field.value.trim()) {
+        field.style.borderColor = '#c0392b';
+        valid = false;
+      } else {
+        field.style.borderColor = '';
+      }
+    });
+    if (!valid) return;
+    // Show success state
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  });
+</script>
+</body>
+</html>

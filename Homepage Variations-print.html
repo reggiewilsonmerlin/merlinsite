@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merlin Classic Cars — Homepage Variations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Anton&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #2a2a2a;
+      font-family: 'DM Sans', sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── Cover page ── */
+    .cover-page {
+      width: 297mm;
+      height: 210mm;
+      background: #0d1b2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .cover-page::before {
+      content: 'MCC';
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 28rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .cover-logo { height: 90px; position: relative; z-index: 1; }
+    .cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #f5f0e8;
+      text-align: center;
+      position: relative; z-index: 1;
+    }
+    .cover-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #e8b923;
+      position: relative; z-index: 1;
+    }
+    .cover-rule {
+      width: 60px; height: 2px;
+      background: #e8b923;
+      position: relative; z-index: 1;
+    }
+    .cover-note {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+      text-align: center;
+      position: relative; z-index: 1;
+    }
+
+    /* ── Variant page wrapper ── */
+    .variant-page {
+      width: 297mm;
+      height: 210mm;
+      overflow: hidden;
+      position: relative;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Variant label badge ── */
+    .variant-badge {
+      position: absolute;
+      top: 0; right: 0;
+      z-index: 100;
+      padding: 0.4rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ════════ VARIANT A — Heritage Editorial ════════ */
+    .va {
+      background: #0d1b2a;
+      color: #f5f0e8;
+    }
+    .va .variant-badge { background: #e8b923; color: #0d1b2a; }
+
+    .va-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 52px; flex-shrink: 0;
+      background: rgba(13,27,42,0.97);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .va-nav img { height: 34px; }
+    .va-nav-links { display: flex; gap: 1.25rem; }
+    .va-nav-links span {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.7);
+    }
+    .va-phone-nav {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem; font-weight: 700; color: #e8b923;
+    }
+
+    .va-hero {
+      position: relative; flex: 1;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .va-hero-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.45;
+    }
+    .va-hero-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,27,42,0.05) 0%, rgba(13,27,42,0.65) 55%, rgba(13,27,42,0.97) 100%);
+    }
+    .va-hero-content {
+      position: relative; z-index: 2;
+      padding: 0 2.5rem 1.5rem;
+    }
+    .va-label {
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #e8b923; margin-bottom: 0.4rem;
+    }
+    .va-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem; font-weight: 900; line-height: 0.95;
+      color: #fff; margin-bottom: 0.6rem; max-width: 12ch;
+    }
+    .va-title em { font-style: italic; color: #e8b923; }
+    .va-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; color: rgba(255,255,255,0.7);
+      max-width: 46ch; line-height: 1.55; font-weight: 300; margin-bottom: 1rem;
+    }
+    .va-btns { display: flex; gap: 0.6rem; }
+    .va-btn-gold {
+      display: inline-block; padding: 0.5rem 1.25rem;
+      background: #e8b923; color: #0d1b2a;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .va-btn-out {
+      display: inline-block; padding: 0.5rem 1.25rem;
+      border: 1px solid rgba(255,255,255,0.35); color: #fff;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .va-marquee {
+      background: #e8b923; padding: 0.35rem 0; flex-shrink: 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .va-marquee-inner { display: inline-flex; }
+    .va-marquee-item {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0 1.5rem;
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #0d1b2a;
+    }
+
+    .va-services {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.05); flex-shrink: 0;
+    }
+    .va-svc {
+      background: #162236; padding: 0.75rem 0.9rem;
+      border-top: 1.5px solid transparent;
+    }
+    .va-svc h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.65rem; font-weight: 600; color: #f5f0e8; margin-bottom: 0.3rem;
+    }
+    .va-svc p { font-size: 0.55rem; color: #8a9ab0; line-height: 1.5; }
+    .va-svc-link {
+      display: inline-block; margin-top: 0.4rem;
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #e8b923;
+    }
+
+    .va-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 2.5rem; flex-shrink: 0;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .va-footer img { height: 28px; }
+    .va-footer p { font-size: 0.55rem; color: #8a9ab0; }
+
+    /* ════════ VARIANT B — Raw Motorsport ════════ */
+    .vb { background: #f0ebe0; color: #111; }
+    .vb .variant-badge { background: #111; color: #e8b923; }
+
+    .vb-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 50px; flex-shrink: 0;
+      background: #111; border-bottom: 2.5px solid #e8b923;
+    }
+    .vb-nav img { height: 32px; filter: invert(1) brightness(2); }
+    .vb-nav-links { display: flex; gap: 0; }
+    .vb-nav-links span {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+      padding: 0 0.9rem; display: flex; align-items: center;
+      border-right: 1px solid rgba(255,255,255,0.08); height: 50px;
+    }
+    .vb-phone-nav {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.05rem; letter-spacing: 0.05em; color: #e8b923;
+    }
+
+    .vb-hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      flex: 1; overflow: hidden;
+    }
+    .vb-hero-left {
+      background: #111; padding: 2rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden;
+    }
+    .vb-hero-left::after {
+      content: '77';
+      position: absolute; bottom: -1rem; right: -0.5rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 10rem; color: rgba(255,255,255,0.03);
+      line-height: 1; pointer-events: none;
+    }
+    .vb-est {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #e8b923;
+    }
+    .vb-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 3.8rem; line-height: 0.9;
+      color: #fff; letter-spacing: 0.02em; position: relative; z-index: 1;
+    }
+    .vb-title span { color: #e8b923; }
+    .vb-sub {
+      font-size: 0.68rem; color: rgba(255,255,255,0.5);
+      line-height: 1.6; max-width: 34ch; font-weight: 300;
+    }
+    .vb-btns { display: flex; gap: 0.5rem; }
+    .vb-btn-y {
+      padding: 0.5rem 1.1rem; background: #e8b923; color: #111;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .vb-btn-w {
+      padding: 0.5rem 1.1rem; background: transparent;
+      color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.25);
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .vb-hero-right { position: relative; overflow: hidden; background: #222; }
+    .vb-hero-right img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; display: block; }
+    .vb-hero-right-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(17,17,17,0.4) 0%, transparent 60%);
+    }
+
+    .vb-ticker {
+      background: #e8b923; padding: 0.3rem 0; flex-shrink: 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .vb-ticker-inner { display: inline-flex; }
+    .vb-ticker-item {
+      display: inline-flex; align-items: center; gap: 1rem; padding: 0 1.5rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.1em; color: #111;
+    }
+    .vb-ticker-item span { opacity: 0.35; }
+
+    .vb-services-wrap { padding: 1.25rem 2rem 0; }
+    .vb-services-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+    .vb-services-head .sub {
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #888; margin-bottom: 0.25rem;
+    }
+    .vb-services-head h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: 2rem; line-height: 1; letter-spacing: 0.02em; color: #111;
+    }
+    .vb-svc-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 1.5px; background: #d5cfc4;
+    }
+    .vb-svc-card {
+      background: #f0ebe0; padding: 0.75rem 0.85rem;
+      border-left: 2.5px solid transparent;
+    }
+    .vb-svc-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.5rem; color: #e8b923; line-height: 1; margin-bottom: 0.35rem; opacity: 0.8;
+    }
+    .vb-svc-card h3 { font-size: 0.6rem; font-weight: 700; color: #111; margin-bottom: 0.25rem; }
+    .vb-svc-card p  { font-size: 0.52rem; color: #666; line-height: 1.5; }
+
+    .vb-cta {
+      background: #111; padding: 1rem 2rem; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto;
+    }
+    .vb-cta h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.4rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .vb-cta h3 span { color: #e8b923; }
+    .vb-cta-right { display: flex; align-items: center; gap: 2rem; }
+    .vb-cta-lbl { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.15rem; }
+    .vb-cta-phone { font-family: 'Anton', sans-serif; font-size: 1.3rem; color: #e8b923; }
+
+    /* ════════ VARIANT C — Refined Gentleman's Club ════════ */
+    .vc { background: #f7f2e8; color: #1a1a1a; }
+    .vc .variant-badge { background: #0d1b2a; color: #e8b923; }
+
+    .vc-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 56px; flex-shrink: 0;
+      background: #f7f2e8; border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .vc-nav img { height: 40px; }
+    .vc-nav-links { display: flex; gap: 1.75rem; }
+    .vc-nav-links span {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #555;
+    }
+    .vc-nav-right { display: flex; align-items: center; gap: 1rem; }
+    .vc-phone-nav {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-weight: 700; color: #0d1b2a;
+    }
+    .vc-contact-btn {
+      padding: 0.4rem 1rem; background: #0d1b2a; color: #e8b923;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .vc-rule { height: 1px; background: #c49e18; flex-shrink: 0; }
+
+    .vc-hero {
+      display: grid; grid-template-columns: 5fr 4fr;
+      flex: 1; overflow: hidden;
+    }
+    .vc-hero-left {
+      padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;
+      background: #f7f2e8; position: relative;
+    }
+    .vc-hero-left::after {
+      content: ''; position: absolute; top: 2.5rem; right: 0;
+      width: 1px; height: calc(100% - 5rem); background: rgba(0,0,0,0.1);
+    }
+    .vc-tag {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #c49e18; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .vc-tag::before { content: ''; display: block; width: 24px; height: 1px; background: #c49e18; }
+    .vc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.75rem; font-weight: 900; line-height: 1.0;
+      color: #0d1b2a; margin-bottom: 1rem;
+    }
+    .vc-title em { font-style: italic; color: #c49e18; }
+    .vc-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; line-height: 1.75; color: #555;
+      max-width: 44ch; font-weight: 300; margin-bottom: 1.5rem;
+    }
+    .vc-btns { display: flex; gap: 0.75rem; align-items: center; }
+    .vc-btn-navy {
+      padding: 0.55rem 1.25rem; background: #0d1b2a; color: #e8b923;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .vc-btn-link {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #0d1b2a;
+    }
+    .vc-hero-right { position: relative; overflow: hidden; background: #0d1b2a; }
+    .vc-hero-right img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; display: block; }
+    .vc-hero-badge {
+      position: absolute; bottom: 1.25rem; left: 1.25rem;
+      background: #e8b923; padding: 0.65rem 1rem;
+    }
+    .vc-hero-badge .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 900; color: #0d1b2a; line-height: 1;
+    }
+    .vc-hero-badge .lbl {
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #0d1b2a;
+    }
+
+    .vc-stats {
+      background: #0d1b2a; padding: 0 2.5rem; flex-shrink: 0;
+      display: flex; align-items: stretch;
+    }
+    .vc-stat {
+      flex: 1; padding: 0.75rem 0;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+    }
+    .vc-stat:last-child { border-right: none; }
+    .vc-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 900; color: #e8b923; line-height: 1;
+    }
+    .vc-stat-lbl {
+      font-size: 0.52rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+
+    .vc-services-wrap { padding: 1.25rem 2.5rem 0; }
+    .vc-svc-head { margin-bottom: 0.75rem; }
+    .vc-svc-head .label {
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #c49e18; margin-bottom: 0.3rem;
+    }
+    .vc-svc-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 700; color: #0d1b2a; line-height: 1.1;
+    }
+    .vc-svc-head h2 em { font-style: italic; }
+    .vc-svc-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 1px; background: rgba(0,0,0,0.07);
+    }
+    .vc-svc {
+      background: #f7f2e8; padding: 0.75rem 0.85rem;
+      position: relative;
+    }
+    .vc-svc::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1.5px; background: #e8b923;
+    }
+    .vc-svc h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.65rem; font-weight: 700; color: #0d1b2a; margin-bottom: 0.3rem;
+    }
+    .vc-svc p { font-size: 0.52rem; color: #777; line-height: 1.5; }
+
+    .vc-cta {
+      margin: 0.75rem 2.5rem 0;
+      background: #0d1b2a; padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .vc-cta-left .label {
+      font-size: 0.52rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.25rem;
+    }
+    .vc-cta-left h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700; color: #f5f0e8; line-height: 1.15;
+    }
+    .vc-cta-right { display: flex; align-items: center; gap: 1.75rem; }
+    .vc-cta-phone-lbl {
+      font-size: 0.52rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.15rem;
+    }
+    .vc-cta-phone-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 900; color: #e8b923;
+    }
+
+    /* ── Print rules ── */
+    @media print {
+      @page { size: A4 landscape; margin: 0; }
+      body { background: white; }
+      .cover-page,
+      .variant-page { page-break-after: always; break-after: page; }
+      .cover-page:last-child,
+      .variant-page:last-child { page-break-after: auto; break-after: auto; }
+    }
+
+    /* Screen: show as stacked pages with gaps */
+    @media screen {
+      .page-wrap {
+        display: flex; flex-direction: column; gap: 24px;
+        padding: 24px; align-items: center;
+      }
+      .cover-page,
+      .variant-page {
+        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Cover -->
+  <div class="cover-page">
+    <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars" class="cover-logo">
+    <div class="cover-rule"></div>
+    <p class="cover-sub">Homepage Design Directions</p>
+    <h1 class="cover-title">Three Visual Concepts<br>for Review</h1>
+    <p class="cover-note">A · Heritage Editorial &nbsp;·&nbsp; B · Raw Motorsport &nbsp;·&nbsp; C · Refined Serif-led<br>May 2026</p>
+  </div>
+
+  <!-- ═══ VARIANT A ═══ -->
+  <div class="variant-page va">
+    <span class="variant-badge">A · Heritage Editorial</span>
+
+    <nav class="va-nav">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+      <div class="va-nav-links">
+        <span>Home</span><span>Services</span><span>Gallery</span>
+        <span>Cars for Sale</span><span>About</span><span>Contact</span>
+      </div>
+      <span class="va-phone-nav">01663 746499</span>
+    </nav>
+
+    <div class="va-hero">
+      <img src="uploads/photos-1777807599577.jpeg" alt="" class="va-hero-img">
+      <div class="va-hero-grad"></div>
+      <div class="va-hero-content">
+        <p class="va-label">Est. 1977 · Stockport, Cheshire</p>
+        <h1 class="va-title">Guardians of the <em>Great British</em> Classic</h1>
+        <p class="va-sub">Merlin Classic Cars — a family of restorers and engineers with over 45 years of experience. Austin Healey specialists and so much more.</p>
+        <div class="va-btns">
+          <span class="va-btn-gold">View Our Work</span>
+          <span class="va-btn-out">Our Services</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="va-marquee">
+      <div class="va-marquee-inner">
+        <span class="va-marquee-item">Austin Healey Specialists <span>·</span></span>
+        <span class="va-marquee-item">Concours Award Winners <span>·</span></span>
+        <span class="va-marquee-item">Full Restoration <span>·</span></span>
+        <span class="va-marquee-item">Servicing & Maintenance <span>·</span></span>
+        <span class="va-marquee-item">Race Preparation <span>·</span></span>
+        <span class="va-marquee-item">Est. 1977 <span>·</span></span>
+        <span class="va-marquee-item">Stockport, Cheshire <span>·</span></span>
+        <span class="va-marquee-item">Bespoke Fabrication <span>·</span></span>
+      </div>
+    </div>
+
+    <div class="va-services">
+      <div class="va-svc"><h3>Servicing & Maintenance</h3><p>Routine servicing, MOT prep, carburettor tuning and year-round upkeep.</p><span class="va-svc-link">Learn more →</span></div>
+      <div class="va-svc"><h3>Full Restoration</h3><p>Bare-metal to concours finish. Award-winning results with full photographic record.</p><span class="va-svc-link">Learn more →</span></div>
+      <div class="va-svc"><h3>Bodywork & Paintwork</h3><p>Panel fabrication, rust repair, factory-correct and bespoke custom finishes.</p><span class="va-svc-link">Learn more →</span></div>
+      <div class="va-svc"><h3>Engine & Drivetrain</h3><p>Full rebuilds, gearbox and differential overhauls across all classic marques.</p><span class="va-svc-link">Learn more →</span></div>
+      <div class="va-svc"><h3>Race Preparation</h3><p>FIA specification builds and race day support. Proven results on track.</p><span class="va-svc-link">Learn more →</span></div>
+      <div class="va-svc"><h3>Bespoke Fabrication</h3><p>One-off builds, coach-building and custom panels. No project too unusual.</p><span class="va-svc-link">Learn more →</span></div>
+    </div>
+
+    <div class="va-footer">
+      <img src="uploads/logo-1777807456164.png" alt="">
+      <p>Unit 1C, The Ropery · New Mills SK22 3JL · 01663 746499</p>
+      <p>© 2026 Merlin Classic Cars</p>
+    </div>
+  </div>
+
+  <!-- ═══ VARIANT B ═══ -->
+  <div class="variant-page vb">
+    <span class="variant-badge">B · Raw Motorsport</span>
+
+    <nav class="vb-nav">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+      <div class="vb-nav-links">
+        <span>Services</span><span>Gallery</span><span>Cars for Sale</span>
+        <span>About</span><span>Contact</span>
+      </div>
+      <span class="vb-phone-nav">01663 746499</span>
+    </nav>
+
+    <div class="vb-hero">
+      <div class="vb-hero-left">
+        <p class="vb-est">Est. 1977 · Stockport, Cheshire</p>
+        <h1 class="vb-title">CLASSIC<br><span>CARS</span><br>DONE<br>RIGHT.</h1>
+        <p class="vb-sub">Austin Healey specialists and renowned restorers of all classic marques. Over 45 years of family expertise.</p>
+        <div class="vb-btns">
+          <span class="vb-btn-y">View Our Work</span>
+          <span class="vb-btn-w">Call 01663 746499</span>
+        </div>
+      </div>
+      <div class="vb-hero-right">
+        <img src="uploads/photos-1777807599577.jpeg" alt="Austin Healey">
+        <div class="vb-hero-right-grad"></div>
+      </div>
+    </div>
+
+    <div class="vb-ticker">
+      <div class="vb-ticker-inner">
+        <span class="vb-ticker-item">Austin Healey <span>◆</span></span>
+        <span class="vb-ticker-item">Jaguar <span>◆</span></span>
+        <span class="vb-ticker-item">MG <span>◆</span></span>
+        <span class="vb-ticker-item">Rolls Royce <span>◆</span></span>
+        <span class="vb-ticker-item">Triumph <span>◆</span></span>
+        <span class="vb-ticker-item">Ford <span>◆</span></span>
+        <span class="vb-ticker-item">Mini <span>◆</span></span>
+        <span class="vb-ticker-item">Concours Winners <span>◆</span></span>
+        <span class="vb-ticker-item">Race Prep <span>◆</span></span>
+        <span class="vb-ticker-item">Est. 1977 <span>◆</span></span>
+      </div>
+    </div>
+
+    <div class="vb-services-wrap">
+      <div class="vb-services-head">
+        <div><p class="sub">What we offer</p><h2>OUR SERVICES</h2></div>
+        <span style="font-family:'Anton',sans-serif;font-size:0.7rem;letter-spacing:0.1em;color:#111;border-bottom:2px solid #e8b923;padding-bottom:1px">VIEW ALL →</span>
+      </div>
+      <div class="vb-svc-grid">
+        <div class="vb-svc-card"><div class="vb-svc-num">01</div><h3>Servicing & Maintenance</h3><p>Routine servicing, MOT prep, carburettor tuning and mechanical upkeep.</p></div>
+        <div class="vb-svc-card"><div class="vb-svc-num">02</div><h3>Full Restoration</h3><p>Award-winning concours restorations with full photographic documentation.</p></div>
+        <div class="vb-svc-card"><div class="vb-svc-num">03</div><h3>Bodywork & Paint</h3><p>Bare-metal work to bespoke custom finishes. Any spec, any marque.</p></div>
+        <div class="vb-svc-card"><div class="vb-svc-num">04</div><h3>Engine & Drivetrain</h3><p>Complete engine rebuilds, gearbox and differential overhaul.</p></div>
+        <div class="vb-svc-card"><div class="vb-svc-num">05</div><h3>Race Preparation</h3><p>FIA-spec builds and race day support. Proven on track.</p></div>
+        <div class="vb-svc-card"><div class="vb-svc-num">06</div><h3>Bespoke Builds</h3><p>One-off fabrication and coach-building. No project too unusual.</p></div>
+      </div>
+    </div>
+
+    <div class="vb-cta">
+      <h3>READY TO TALK<br><span>ABOUT YOUR CAR?</span></h3>
+      <div class="vb-cta-right">
+        <div>
+          <p class="vb-cta-lbl">Call us now</p>
+          <p class="vb-cta-phone">01663 746499</p>
+        </div>
+        <span class="vb-btn-y">Send a Message</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ VARIANT C ═══ -->
+  <div class="variant-page vc">
+    <span class="variant-badge">C · Refined Serif-led</span>
+
+    <nav class="vc-nav">
+      <img src="uploads/logo-1777807456164.png" alt="Merlin Classic Cars">
+      <div class="vc-nav-links">
+        <span>Services</span><span>Gallery</span><span>Cars for Sale</span><span>About</span>
+      </div>
+      <div class="vc-nav-right">
+        <span class="vc-phone-nav">01663 746499</span>
+        <span class="vc-contact-btn">Contact</span>
+      </div>
+    </nav>
+    <div class="vc-rule"></div>
+
+    <div class="vc-hero">
+      <div class="vc-hero-left">
+        <p class="vc-tag">Est. 1977 · Stockport, Cheshire</p>
+        <h1 class="vc-title">The Art of the<br><em>Classic Car</em></h1>
+        <p class="vc-body">Merlin Classic Cars — a family of restorers, engineers and enthusiasts. Austin Healey specialists and trusted custodians of the finest British and European classics for over four decades.</p>
+        <div class="vc-btns">
+          <span class="vc-btn-navy">View Our Work</span>
+          <span class="vc-btn-link">Our Services →</span>
+        </div>
+      </div>
+      <div class="vc-hero-right">
+        <img src="uploads/photos-1777807599577.jpeg" alt="Austin Healey">
+        <div class="vc-hero-badge">
+          <div class="num">45+</div>
+          <div class="lbl">Years of<br>Expertise</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vc-stats">
+      <div class="vc-stat"><span class="vc-stat-num">45+</span><span class="vc-stat-lbl">Years in Business</span></div>
+      <div class="vc-stat"><span class="vc-stat-num">200+</span><span class="vc-stat-lbl">Restorations</span></div>
+      <div class="vc-stat"><span class="vc-stat-num">12+</span><span class="vc-stat-lbl">Concours Awards</span></div>
+      <div class="vc-stat"><span class="vc-stat-num">18+</span><span class="vc-stat-lbl">Marques</span></div>
+    </div>
+
+    <div class="vc-services-wrap">
+      <div class="vc-svc-head">
+        <p class="label">What We Offer</p>
+        <h2>The Complete <em>Classic Car Service</em></h2>
+      </div>
+      <div class="vc-svc-grid">
+        <div class="vc-svc"><h3>Servicing & Maintenance</h3><p>Routine oil changes to full mechanicals. The most affordable way to keep your classic in perfect health.</p></div>
+        <div class="vc-svc"><h3>Full Restoration</h3><p>Concours-quality restorations documented at every stage. Multiple award-winning results.</p></div>
+        <div class="vc-svc"><h3>Bodywork & Paintwork</h3><p>Factory-correct or bespoke finishes. Rust repair, panel fabrication and full resprays.</p></div>
+        <div class="vc-svc"><h3>Engine & Drivetrain</h3><p>Engine rebuilds, gearbox overhauls, carburettor work. Sympathetic to originals.</p></div>
+        <div class="vc-svc"><h3>Race Preparation</h3><p>FIA specification builds and race day support. Proven competitive results.</p></div>
+        <div class="vc-svc"><h3>Bespoke & Specialist</h3><p>One-off builds, insurance repairs, valuations and vehicle transportation.</p></div>
+      </div>
+    </div>
+
+    <div class="vc-cta">
+      <div class="vc-cta-left">
+        <p class="label">Get in touch</p>
+        <h3>Ready to discuss<br>your vehicle?</h3>
+      </div>
+      <div class="vc-cta-right">
+        <div>
+          <p class="vc-cta-phone-lbl">Call us today</p>
+          <p class="vc-cta-phone-num">01663 746499</p>
+        </div>
+        <span class="vc-btn-navy">Send a Message</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+  // Wait for fonts + images, then print
+  document.fonts.ready.then(() => {
+    const imgs = [...document.images];
+    const loaded = imgs.map(img => new Promise(resolve => {
+      if (img.complete) resolve();
+      else { img.onload = resolve; img.onerror = resolve; }
+    }));
+    Promise.all(loaded).then(() => {
+      setTimeout(() => window.print(), 500);
+    });
+  });
+</script>
+</body>
+</html>
