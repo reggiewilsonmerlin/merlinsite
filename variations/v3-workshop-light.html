@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3 · The Workshop — Merlin Classic Cars</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+:root{--display:'Source Serif 4',Georgia,serif;--body:'Inter',system-ui,sans-serif;--bg:#f7f4ec;--ink:#13233d;--gold:#b08a2e;--on-gold:#fff;--line:#e2dbc9;--card:#fff}
+nav.top{border-bottom:1px solid var(--line)}
+.topline{background:#13233d;color:#fff;font-size:.74rem;text-align:center;padding:.45rem;letter-spacing:.08em}
+.topline b{color:#e4c15c}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;padding:3.5rem 0}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);color:#13233d}
+.hero p{margin:1rem 0 1.4rem;font-size:1.05rem}
+.hero img{border-radius:4px;aspect-ratio:4/3;object-fit:cover;box-shadow:0 20px 50px rgba(19,35,61,.18)}
+.trust{display:flex;flex-wrap:wrap;gap:1.6rem;font-size:.82rem;opacity:.8;margin-top:1.4rem}
+.trust b{display:block;font-family:var(--display);font-size:1.5rem;color:var(--gold)}
+.svc{background:#13233d;color:#f1ead9}
+.svc .card{background:#1a2f52;border-color:rgba(255,255,255,.08)}
+.svc .card.feature{background:var(--gold);color:#13233d}
+.svc .card.feature .eyebrow{color:#13233d}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;counter-reset:s}
+.steps div{padding:1.4rem;border-left:3px solid var(--gold);background:#fff}
+.steps div::before{counter-increment:s;content:"0" counter(s);font-family:var(--display);font-size:1.6rem;color:var(--gold);display:block}
+.cta{background:#fff;border-top:1px solid var(--line)}
+.cta .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem}
+.cta .phone{font-size:2.2rem}
+@media(max-width:760px){.hero{grid-template-columns:1fr}}
+</style></head><body>
+<div class="topline">Workshop open Mon–Fri 8am–5.30pm · <b>01663 746499</b> · New Mills, Stockport</div>
+<header class="wrap"><nav class="top"><a class="logo" href="#"><img src="img/logo.png" alt="Merlin Classic Cars"></a>
+<ul><li><a href="#">Servicing</a></li><li><a href="#">Bodywork</a></li><li><a href="#">Restoration</a></li><li><a href="#">Gallery</a></li><li><a href="#">Cars for Sale</a></li><li><a href="#">About</a></li></ul>
+<a class="btn solid" href="tel:01663746499">Call the workshop</a></nav></header>
+
+<section class="wrap hero"><div><span class="eyebrow">Classic &amp; vintage car servicing · New Mills</span>
+<h1>Keep your classic on the road, with the people who restore them.</h1>
+<p>Servicing, MOT preparation, brakes, carburettors, electrics and bodywork for every marque, from a family workshop that has been restoring Austin-Healeys since 1977. Straight talk, written estimates, no surprises.</p>
+<a class="btn solid" href="#">Book a service</a> &nbsp; <a class="btn ghost" href="#">Get an estimate</a>
+<div class="trust"><span><b>48</b>years in business</span><span><b>3</b>generations</span><span><b>2,900</b>photos of our work</span></div></div>
+<img src="img/d9d2037c012a_800.webp" alt="A busy day inside the Merlin Classic Cars workshop" width="800" height="600"></section>
+
+<section class="svc"><div class="wrap"><span class="eyebrow">Services</span><h2 style="font-size:2.2rem;margin:.4rem 0 1.4rem">Everything a classic needs, under one roof</h2>
+<div class="grid g4">
+<div class="card feature"><span class="eyebrow">Start here</span><h3>Servicing &amp; maintenance</h3><p>Annual and interim services, pre-MOT checks, tuning, brakes and the jobs that stop small problems becoming big ones.</p></div>
+<div class="card"><h3>Bodywork &amp; paint</h3><p>Bare-metal resprays, lead loading, rust repair and panel fabrication.</p></div>
+<div class="card"><h3>Engine, gearbox &amp; drivetrain</h3><p>Rebuilds and repairs using the original tooling.</p></div>
+<div class="card"><h3>Restoration &amp; race prep</h3><p>From part restorations to concours winners and competition cars.</p></div>
+</div></div></section>
+
+<section class="wrap"><span class="eyebrow">How it works</span><h2 style="font-size:2.2rem;margin:.4rem 0 1.4rem">Three steps, no pressure</h2>
+<div class="steps"><div><h3>Call or message</h3><p>Tell us the car and what it needs. We'll ask the right questions.</p></div><div><h3>Written estimate</h3><p>Clear scope and price before any work starts.</p></div><div><h3>Photos as we go</h3><p>You see progress at every stage, the same photos that end up in our gallery.</p></div></div></section>
+
+<section class="wrap"><span class="eyebrow">Gallery</span><h2 style="font-size:2.2rem;margin:.4rem 0 1.4rem">Recent work</h2>
+<div class="gallery">
+<figure><img src="img/838081f475d7_800.webp" alt="Frogeye Sprite bare-metal paintwork" loading="lazy"><figcaption>Frogeye respray</figcaption></figure>
+<figure><img src="img/1bbcbd3e4ef9_1600.webp" alt="Austin-Healey at Goodwood Concours" loading="lazy"><figcaption>Goodwood Concours</figcaption></figure>
+<figure><img src="img/734cb529391f_1600.webp" alt="Austin-Healey rally car" loading="lazy"><figcaption>Rally Healey</figcaption></figure>
+<figure><img src="img/1ffaaaaa871f_1600.webp" alt="Austin Seven Ruby saloon" loading="lazy"><figcaption>Austin Seven Ruby</figcaption></figure>
+<figure><img src="img/d32d6b00a1d1_1600.webp" alt="Race-prepared Austin-Healey" loading="lazy"><figcaption>Race-prepared Healey</figcaption></figure>
+<figure><img src="img/24dae4427fe8_1600.webp" alt="1934 Earl's Court Morris show car" loading="lazy"><figcaption>1934 Morris show car</figcaption></figure>
+</div></section>
+
+<section class="cta"><div class="wrap"><div><span class="eyebrow">Call the workshop</span><a class="phone" href="tel:01663746499" style="display:block">01663 746499</a><p>Unit 1C, The Ropery, Redmoor Lane, New Mills, SK22 3JL</p></div><a class="btn solid" href="#">Send a message</a></div></section>
+<footer class="wrap">© Merlin Classic Cars · est. 1977</footer>
+<div class="ribbon"><span>Direction 3 of 7 · The Workshop (light, service-led)</span><a href="index.html">All directions ↗</a></div>
+</body></html>

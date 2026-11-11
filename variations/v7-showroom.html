@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7 · The Showroom — Merlin Classic Cars</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="shared.css">
+<style>
+:root{--display:'Cinzel',Georgia,serif;--body:'EB Garamond',Georgia,serif;--bg:#0e2240;--ink:#f3ecdc;--gold:#d4af5a;--on-gold:#0e2240;--line:rgba(212,175,90,.3);--card:#13294c}
+body{background:linear-gradient(180deg,#0e2240,#071428 60%,#040d1c);font-size:1.08rem}
+nav.top{justify-content:center;flex-direction:column;gap:.8rem;padding:1.4rem 0}
+nav.top .logo img{height:80px}
+nav.top ul{font-family:var(--display);letter-spacing:.22em}
+.hero{text-align:center;padding:2rem 0 3rem}
+.hero h1{font-size:clamp(2rem,5vw,3.6rem);letter-spacing:.06em}
+.hero p{max-width:58ch;margin:1rem auto 1.6rem;font-style:italic;opacity:.9}
+.frame{border:1px solid var(--gold);padding:.6rem;max-width:1000px;margin:2.5rem auto 0;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.frame img{aspect-ratio:16/8;object-fit:cover;width:100%}
+.orn{text-align:center;color:var(--gold);letter-spacing:.5em;margin:1.4rem 0}
+.cars{display:flex;gap:1.2rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:1rem}
+.cars article{flex:0 0 min(320px,80vw);scroll-snap-align:start;background:var(--card);border:1px solid var(--line)}
+.cars img{aspect-ratio:4/3;object-fit:cover;width:100%}
+.cars .b{padding:1rem 1.2rem 1.3rem}
+.cars h3{font-size:1.05rem;letter-spacing:.06em}
+.cars .price{color:var(--gold);font-family:var(--display);margin-top:.3rem}
+.cars small{display:block;opacity:.75;margin-top:.3rem}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;text-align:center}
+.svc div{padding:1.8rem 1.2rem;border:1px solid var(--line)}
+.svc h3{font-size:1rem;letter-spacing:.1em;margin:.6rem 0 .5rem}
+.svc .ic{font-family:var(--display);font-size:2rem;color:var(--gold)}
+.cta{text-align:center;border-top:1px solid var(--line)}
+.cta .phone{font-size:2.6rem;display:block;margin:.4rem 0}
+</style></head><body>
+<header class="wrap"><nav class="top"><a class="logo" href="#"><img src="img/logo.png" alt="Merlin Classic Cars"></a>
+<ul><li><a href="#">Servicing</a></li><li><a href="#">Restoration</a></li><li><a href="#">Gallery</a></li><li><a href="#">Cars for sale</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul></nav></header>
+
+<section class="wrap hero"><span class="eyebrow">Austin-Healey specialists · New Mills · est. 1977</span>
+<h1>Restorers of the British Classic</h1>
+<p>Servicing, coach building and restoration for classic and vintage cars of every marque, by a family that has spent three generations with its hands on them.</p>
+<a class="btn solid" href="tel:01663746499">Call 01663 746499</a> &nbsp; <a class="btn ghost" href="#">Enter the gallery</a>
+<div class="frame"><img src="img/upload1.webp" alt="Two primrose Austin-Healeys beside a BMC Competition Department transporter" width="1600" height="1200"></div>
+<div class="orn">✦ ✦ ✦</div></section>
+
+<section class="wrap"><span class="eyebrow">For sale &amp; recent projects</span><h2 style="font-size:1.7rem;letter-spacing:.06em;margin:.4rem 0 1.4rem">In the showroom</h2>
+<div class="cars">
+<article><img src="img/31163065ee34_1600.webp" alt="Austin-Healey fully restored by Merlin Classic Cars" loading="lazy"><div class="b"><h3>Austin-Healey 3000</h3><div class="price">Price on application</div><small>Fully restored by Merlin · fast road specification</small></div></article>
+<article><img src="img/c617725a8074_1600.webp" alt="Austin-Healey two seater" loading="lazy"><div class="b"><h3>Austin-Healey 100 two-seater</h3><div class="price">Recently completed</div><small>Concours restoration</small></div></article>
+<article><img src="img/d32d6b00a1d1_1600.webp" alt="Race-prepared Austin-Healey" loading="lazy"><div class="b"><h3>Austin-Healey race car</h3><div class="price">Built &amp; race prepared</div><small>Competition specification</small></div></article>
+<article><img src="img/24dae4427fe8_1600.webp" alt="1934 Earl's Court Morris show car" loading="lazy"><div class="b"><h3>1934 Morris Earl's Court show car</h3><div class="price">One of a kind</div><small>Restoration project</small></div></article>
+<article><img src="img/1ffaaaaa871f_1600.webp" alt="Austin Seven Ruby saloon" loading="lazy"><div class="b"><h3>Austin Seven Ruby</h3><div class="price">Restored</div><small>Saloon</small></div></article>
+</div></section>
+
+<section class="wrap"><span class="eyebrow">Services</span><div class="svc" style="margin-top:1rem">
+<div><div class="ic">I</div><h3>SERVICING &amp; MAINTENANCE</h3><p>Services, MOT preparation, brakes, carburettors, electrics.</p></div>
+<div><div class="ic">II</div><h3>BODYWORK &amp; PAINT</h3><p>Bare-metal resprays, lead loading, fabrication.</p></div>
+<div><div class="ic">III</div><h3>RESTORATION</h3><p>Part or full, to concours standard.</p></div>
+<div><div class="ic">IV</div><h3>RACE PREPARATION</h3><p>Healeys, Sprites and MGBs built to compete.</p></div>
+</div></section>
+
+<section class="wrap"><span class="eyebrow">Gallery</span><div class="gallery" style="margin-top:1rem">
+<figure><img src="img/1bbcbd3e4ef9_1600.webp" alt="Austin-Healey at Goodwood Concours" loading="lazy"><figcaption>Goodwood Concours</figcaption></figure>
+<figure><img src="img/734cb529391f_1600.webp" alt="Austin-Healey rally car" loading="lazy"><figcaption>Rally Healey</figcaption></figure>
+<figure><img src="img/838081f475d7_800.webp" alt="Frogeye Sprite bare-metal paintwork" loading="lazy"><figcaption>Frogeye in bare metal</figcaption></figure>
+<figure><img src="img/8b19212c7118_1600.webp" alt="Austin-Healey outside the Merlin workshop" loading="lazy"><figcaption>At the workshop</figcaption></figure>
+</div></section>
+
+<section class="cta"><div class="wrap"><span class="eyebrow">Enquiries &amp; estimates</span><a class="phone" href="tel:01663746499">01663 746499</a><p>Unit 1C, The Ropery, Redmoor Lane, New Mills, SK22 3JL</p></div></section>
+<footer class="wrap">© Merlin Classic Cars</footer>
+<div class="ribbon"><span>Direction 7 of 7 · The Showroom</span><a href="index.html">All directions ↗</a></div>
+</body></html>
